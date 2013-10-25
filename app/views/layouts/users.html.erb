@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Kreyos | <%= yield :subtitle %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <%= stylesheet_link_tag "home/users_bootstrap" %>
+    <%= stylesheet_link_tag "home/style" %>
+    <%= stylesheet_link_tag "new_style/nav" %>
+    <%= yield :include_css %>
+    
+    <%= javascript_include_tag "home/jquery.min"%>
+    
+    <!--[if !IE]><!-->
+	    <script>  
+			if (/*@cc_on!@*/false) {  
+		    	document.documentElement.className+=' ie10';  
+			}  
+		</script>
+	<!--<![endif]--> 
+
+    <!--[if lt IE 8]>
+        <link href="css/font-awesome-ie7.min.css" rel="stylesheet">
+    <![endif]-->
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+    <![endif]-->
+    
+    
+    <script type="text/javascript">
+        WebFontConfig = {
+            google: {families:[
+                'Lato:300,400,700,900:latin'
+            ]}
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+</head>
+
+<body>
+	<div class="for-dashboard"></div>
+	<div class="for-activity"></div>
+	<div class="for-friends"></div>
+    <div class="page-container">
+        <div id="nav">
+            <div id="container">
+                <div style="float: left; padding-left: 30px;">
+                   <a href="/" class="for_logo"><img src="/assets/home/kreyos-logo.png" alt="Kreyos"></a>
+                </div>
+
+                <div id="kreyos-user">
+                    <div style="float: left; width: 110px;"><%= truncate(logged_user['nickname'], :length => 18) %></div>
+                    <img src="http://graph.facebook.com/<%= logged_user['uid']%>/picture?type=square">
+                    <!-- Dropdown -->
+                    <div style="float: right; cursor:pointer; padding-bottom: 15px;" class="dropdown">
+                      <div data-toggle="dropdown" class="myaccount">my account</div>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					    <li><a href="/badges" class="Dropdown-nobg"><img src="assets/common/icons/icons-profileBadges.png" class="Dropdown-img" />Badges</a></li>
+		                <li><a href="/profile" class="Dropdown-nobg"><img src="assets/common/icons/icons-profileProfile.png" class="Dropdown-img" />Profile</a></li>
+		                <li><a href="/settings" class="Dropdown-nobg"><img src="assets/common/icons/icons-profileSettings.png" class="Dropdown-img" />Settings</a></li>
+		                <li><a href="/signout" class="Dropdown-nobg"><img src="assets/common/icons/icons-profileLogout.png" class="Dropdown-img" />Logout</a></li>
+					  </ul>
+					</div>
+                    <!-- <div style="float: right;" class="myaccount">my account</div> -->
+                    
+                     <div class="u-progress">
+                            <div class="u-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+                                &nbsp;
+                            </div>
+                        </div>
+
+                        <div id="user-level">
+                            Level 2
+                        </div>
+
+                    <div class="clear"></div>
+                    
+                    
+                    
+                </div><!-- end kreyos-user -->
+            </div><!-- end container  -->
+        </div><!-- end nav -->
+
+        <div id="kreyos-nav-wrapper">
+            <div id="container">
+                <div id="kreyos-nav">
+                    <ul>
+                        <li><a href="/dashboard" title="Dashboard"><div class="menu-dashboard"></div></a></li>
+                        <li><a href="/activities" title="Activity"><div class="menu-activity"></div></a></li>
+                        <li><a href="/friends" title="Friends"><div class="menu-friends"></div></a></li>
+                    </ul>
+                </div><!-- end kreyos-nav -->
+
+                <div class="clear"></div>
+
+                <div class="user-progress">
+                    
+                </div>
+            </div><!-- end container -->
+        </div><!-- end kreyos-nav-wrapper -->
+
+<!-- Body Content Start -->
+	<%= yield %>
+<!-- Body Content End -->
+
+<!-- Footer -->
+<div id="footer" class="wrapper section">
+    <div class="container">
+    	<script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/C4AJHZjRkhK13v7P6k3aMA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
+    	
+        <%= render :partial => "static/footer" %>
+    </div>
+</div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <%= javascript_include_tag "facebook" %>
+    <%= javascript_include_tag "home/bootstrap" %>
+    <%= javascript_include_tag "home/html5shiv" %>
+    <%= javascript_include_tag "home/jquery.placeholder.min" %>
+    <%= yield :include_js %>
+    
+    <!-- begin SnapEngage code -->
+	<script type="text/javascript">
+	  (function() {
+	    var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+	    se.src = '//commondatastorage.googleapis.com/code.snapengage.com/js/e3cf3208-b00e-429d-8d3a-3899df7719f1.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+	  })();
+	</script>
+	<!-- end SnapEngage code -->   
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<% content_for :subtitle do %>
+	Friends
+<%end%>
+
+<% content_for :include_css do %>
+	<%= stylesheet_link_tag "new_style/friends-kreyos" %>
+<% end %>
+
+
+<% content_for :include_js do %>
+	<%= javascript_include_tag "users/friends" %>
+<% end %>
+	
+	<style>
+		.invite-btn { outline: none; }	
+	</style>
+	
+ 	<script>
+ 			// Twitter
+	$.getScript("http://platform.twitter.com/widgets.js", function(){
+	   function handleTweetEvent(event){
+	     if (event) {
+	      	$.ajax({
+				type: "post",
+				url: "http://rfp.kreyos.nesventures.net/campaigns/insert_activities_2/twitter/<%= logged_user['email'] %>/<%=@tracker%>/tweet/<%=@campaign_id%>"
+			});
+	     }
+	   }
+	   twttr.events.bind('tweet', handleTweetEvent);  
+	 });
+	 
+	 $(function(){
+	 	$('#btnEmailSend').click(function(){
+			var emailRegEx = /^[ A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z ]{2,4}$/i;
+			var to 		= $('#txtto').val().trim();
+			var subject = $('#txtSubject').val().trim();
+			var message = $('#taMessage').val().trim();
+			
+			if(to == "" || to == "Friend's email"){
+				alert("Email is required");
+			}else if(to.search(emailRegEx) == -1){
+				alert("Invalid Email address");
+			}else if(subject == ""){
+				alert("Subject is required");
+			}else if(message == ""){
+				alert("Message is required");
+			}else{
+				sendEmail(to, subject, message);	
+			}
+		});
+	 });
+	 
+		
+		function sendEmail(to, subject, message){
+			$.ajax({
+				type: "get",
+				url: "http://rfp.kreyos.nesventures.net/campaigns/referral_email",
+				data: {to: to, subject: subject, message: message},
+				dataType:"jsonp",
+				jsonp: "jsonp",
+				success: function(){
+					alert("Email Sent!");
+					$('#txtto').val("");
+					$.ajax({
+						type: "post",
+						url: ""
+					});
+				},
+				error: function(){
+					alert("Email sent!");
+					$('#txtto').val("");
+					$.ajax({
+						type: "post",
+						url: "http://rfp.kreyos.nesventures.net/campaigns/insert_activities_2/email/<%= logged_user['email'] %>/<%=@tracker%>/email/<%=@campaign_id%>"
+					});
+				}	
+			});
+		}
+ 	</script>
+ <div id="content-wrapper">
+    <h1>invite <div class="x-friends">10<div class="x">X</div></div> <div class="n-friends">6 friends</div>, get 1 free kreyos meteor</h1>
+
+    <div id="friends">
+        <ul>
+        	<% if @sharecount == 0 %>
+				<% begin %>
+					<li><img src="/assets/new_style/img_friends/add-more.png"></li>
+				   <% @counter3 += 1 %>
+				<% end while @counter3 <= 6 %>
+			<% elsif @sharecount < 6 %>
+				<% begin %>
+					<li><img src="/assets/new_style/img_friends/check.png"></li>
+				   <% @counter += 1 %>
+				<% end while @counter <= @sharecount %>
+	
+				<% @diff = (6 - @sharecount).to_i %>
+				
+				<% begin %>
+					<li><img src="/assets/new_style/img_friends/add-more.png"></li>
+				   <% @counter2 += 1 %>
+				<% end while @counter2 <= @diff %>
+				
+			<% elsif @sharecount >= 6 %>
+				<% begin %>
+					<li><img src="/assets/new_style/img_friends/check.png"></li>
+				   <% @counter += 1 %>
+				<% end while @counter <= 6 %>
+			<% end %>
+            <a href="#"><li><img src="/assets/new_style/img_friends/free-kreyos.png"></li></a>
+        </ul>
+    </div><!-- end friends -->
+</div><!-- end content-wrapper -->
+
+<div id="container" style="margin-bottom: 150px;">
+    <div id="left">
+        <div id="left-container">
+            <div style="width: 360px; float: left; border-right: 1px solid #e1e8ea; padding-right: 10px;">
+                <h3>SHARE YOUR PERSONAL INVITE LINK</h3>
+                <p>Copy paste the link below into Twitter, Facebook or in an Email. Earn up to $100 to use in any sneakpeeq store!</p>
+
+                <form action="">
+                    <!-- <input type="text" value="http://kreyos.com/2ow01"> -->
+                    <input type="text" value="<%= shortenURL('http://rfp.kreyos.nesventures.net/campaigns/tracker/twitter/'+@campaign_id.to_s+'/'+@campaign_type.to_s+'/'+@tracker.to_s) %>" />
+                    <a href="http://twitter.com/intent/tweet?text=<%= @twitter_description%> - <%= shortenURL('http://rfp.kreyos.nesventures.net/campaigns/tracker/twitter/'+@campaign_id.to_s+'/'+@campaign_type.to_s+'/'+@tracker.to_s) %>"><img src="/assets/new_style/img_friends/twitter-btn.png"></a>
+                    <a href="#" id="btnfb"><img src="/assets/new_style/img_friends/fb-btn.png"></a>
+                </form>
+            </div>
+
+            <div style="width: 300px; float: left; padding-left: 20px;">
+                <h3>EMAIL FRIENDS & FAMILY</h3>
+
+                <form action="" name="">
+                	<input type="text" class="frmtxt" id="txtto" value="" placeholder="To">
+                	<input type="text" class="frmtxt" id="txtSubject" value="<%=@email_subject%>" placeholder="Subject">
+                	<textarea class="ta" id="taMessage" style="resize:none;" placeholder="Message..."><%=@email_message%> - <%= shortenURL('http://rfp.kreyos.nesventures.net/campaigns/tracker/email/'+@campaign_id.to_s+'/'+@campaign_type.to_s+'/'+@tracker.to_s) %></textarea>
+                    <!-- <textarea name="" id="" class="ta" placeholder="Enter email addresses, separated by commas"></textarea> -->
+                    <input type="button" class="invite-btn" id="btnEmailSend">
+                </form>
+            </div>
+
+            <div class="clear"></div>
+        </div><!-- end left-container -->
+        <div id="left-container">
+            <h3 style="width: 140px; margin-bottom: 35px; text-align: center; border-bottom: 2px solid #128cfe;"><%= @fb_friends.count %> friends</h3>
+            <ul>
+            	<% @fb_friends.each do |friend| %>
+					<li><div class="friend-container"><img src="http://graph.facebook.com/<%= friend['uid']%>/picture"><div class="friend-name"><%= friend['name'] %></div> <div id="btnDeleteFriends" rel="<%= friend['email'] %>" class="close">&nbsp;</div></div></li>            	
+            	<% end %>
+                <!-- <li><div class="friend-container"><img src="/assets/new_style/img_friends/friend.png"> <div class="friend-name">Natalie Hemslie</div> <div class="close">&nbsp;</div></div></li> -->
+                <div class="clear"></div>
+            </ul>
+        </div><!-- end left-container -->
+    </div><!-- end left -->
+
+    <div id="right">
+        <div id="right-container">
+            <img src="/assets/new_style/img_friends/kreyosmeteor.png">
+
+            <h3>FREE KREYOS METEOR</h3>
+
+            <p>
+                <b>How it works:</b> 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et auctor sem. Cras quis quam sollicitudin diam aliquam dignissim ac non urna. 
+            </p>
+        </div><!-- end right-container -->
+    </div><!-- end right -->
+<form action="/friends/remove" method="post" id="frmDelFriends">
+	<input type="hidden" id="txtfuid" name="friend_uid" style="width:100%;"/>
+	<div id="btnRemoveFriends"></div>
+</form>
+    
+<input type="hidden" id="referral_fb_title" value="<%=@facebook_title%>">
+<input type="hidden" id="referral_fb_url" value="<%= shortenURL('http://rfp.kreyos.nesventures.net/campaigns/tracker/facebook/'+@campaign_id.to_s+'/'+@campaign_type.to_s+'/'+@tracker.to_s) %>">
+<input type="hidden" id="referral_fb_desc" value="<%=@facebook_description%>">
+<input type="hidden" id="referral_url" value="http://rfp.kreyos.nesventures.net/campaigns/insert_activities_2/facebook/<%= logged_user['email'] %>/<%=@tracker%>/share/<%=@campaign_id%>" />
+
+    <div class="clear"></div>
+
+</div><!-- end container -->
+
+<!-- Delete Confirmation -->
+<div id="modal-confirmation" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Delete Friends Confirmation</h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size: 15px;">Are you sure you want to delete the selected friends?</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    <a href="#" class="btn btn-primary" id="btnYesDel">Yes</a>
+  </div>
+</div>

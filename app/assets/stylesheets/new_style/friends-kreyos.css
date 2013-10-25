@@ -1,0 +1,276 @@
+
+@font-face {
+  font-family: 'proximanovalight';
+  src: url("fonts/proximanovalight.eot");
+  src: url("fonts/proximanovalight.eot?#iefix") format("embedded-opentype"), url("fonts/proximanovalight.woff") format("woff"), url("fonts/proximanovalight.ttf") format("truetype"), url("fonts/proximanovalight.svg#league_gothicregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+  @font-face {
+  font-family: 'news-bold';
+  src: url("fonts/news-bold.eot");
+  src: url("fonts/news-bold.eot?#iefix") format("embedded-opentype"), url("fonts/news-bold.woff") format("woff"), url("fonts/news-bold.ttf") format("truetype"), url("fonts/news-bold.svg#news-bold") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+  @font-face {
+  font-family: 'news-light';
+  src: url("fonts/news-light.eot");
+  src: url("fonts/news-light.eot?#iefix") format("embedded-opentype"), url("fonts/news-light.woff") format("woff"), url("fonts/news-light.ttf") format("truetype"), url("fonts/news-light.svg#news-light") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'news-condensed';
+  src: url("fonts/news-condensed.eot");
+  src: url("fonts/news-condensed.eot?#iefix") format("embedded-opentype"), url("fonts/news-condensed.woff") format("woff"), url("fonts/news-condensed.ttf") format("truetype"), url("fonts/news-condensed.svg#news-condensed") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'league_gothicregular';
+  src: url("fonts/leaguegothic-regular-webfont.eot");
+  src: url("fonts/leaguegothic-regular-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/leaguegothic-regular-webfont.woff") format("woff"), url("fonts/leaguegothic-regular-webfont.ttf") format("truetype"), url("fonts/leaguegothic-regular-webfont.svg#league_gothicregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+body{ 
+  background: #f7f7f7 url('/assets/new_style/img_friends/bg.png') no-repeat center top;
+  background-size: 100%;
+}
+
+.clear{ clear: both; }
+
+#container{
+  width: 1111px;
+  margin: auto;
+  position: relative;
+}
+
+#content-wrapper{
+  margin: 75px auto;
+  width: 1071px;
+  padding: 20px;
+}
+
+#content-wrapper h1{
+  text-align: center;
+  font-family: 'news-condensed', sans-serif;
+  text-transform: uppercase;
+  font-size: 55px;
+  letter-spacing: -3px;
+  
+  text-shadow: 0px 8px 10px #fffeef;
+}
+
+.x-friends{
+  position: relative;
+  display: inline;
+  margin:0 15px 0 15px;
+}
+
+.ie10 .x{
+  position: absolute;
+  /*top: 20px;*/
+  margin-top: -43px;
+  right: -15px;
+  font-size: 100px;
+  font-family: 'proximanovalight', sans-serif;
+  opacity: .75;
+}
+ 
+.x{
+  position: absolute;
+  /*top: 20px;*/
+  margin-top: -35px;
+  right: -15px;
+  font-size: 100px;
+  font-family: 'proximanovalight', sans-serif;
+  opacity: .75;
+}
+
+.n-friends{
+  font-family: 'news-bold', sans-serif;
+  display: inline;
+}
+
+.invite{
+  font-family: 'news-bold', sans-serif;
+}
+
+#friends { 
+	padding-left: 155px;
+}
+
+#friends ul{
+  list-style-type: none;
+}
+
+#friends li{
+  display: inline;
+}
+
+#friends img{
+  -moz-border-radius: 150px;
+  -webkit-border-radius: 150px;
+  border-radius: 150px;
+  /*padding: 10px;*/
+  width: 80px;
+  height: 80px;
+  margin: 25px 6px 20px;
+  -moz-box-shadow: 0 10px 20px #7f7f7f;
+  -webkit-box-shadow: 0 10px 20px #7f7f7f;
+  box-shadow: 0 10px 20px #7f7f7f;
+  
+  background-image: linear-gradient(bottom, #E5EDF0 44%, #FFFFFF 72%);
+  background-image: -o-linear-gradient(bottom, #E5EDF0 44%, #FFFFFF 72%);
+  background-image: -moz-linear-gradient(bottom, #E5EDF0 44%, #FFFFFF 72%);
+  background-image: -webkit-linear-gradient(bottom, #E5EDF0 44%, #FFFFFF 72%);
+  background-image: -ms-linear-gradient(bottom, #E5EDF0 44%, #FFFFFF 72%);
+
+  background-image: -webkit-gradient(
+   linear,
+   left bottom,
+   left top,
+   color-stop(0.44, #E5EDF0),
+   color-stop(0.72, #FFFFFF)
+ );
+}
+
+#left{
+  width: 830px;
+  float: left;
+}
+
+#right{
+  width: 240px;
+  float: left;
+}
+
+#left-container{
+  width: 750px;
+  padding: 30px;
+  background: #ffffff;
+  -moz-border-radius: 15px;
+  -webit-border-radius: 15px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  
+  -moz-box-shadow: 0 0 10px #c0c0c0;
+  -webkit-box-shadow: 0 0 10px #c0c0c0;
+  box-shadow: 0 0 10px #c0c0c0;
+}
+
+.add-more {
+  -moz-border-radius: 150px;
+  -webkit-border-radius: 150px;
+  -ms-border-radius: 150px;
+  border-radius: 150px;
+}
+
+#left-container h3{
+  font-family: 'news-condensed', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+#left-container input[type=text]{
+  width: 339px;
+  height: 40px;
+  font-size: 18px;
+  background: #f1f8fa;
+  border: 1px solid #d0dbde;
+  color: #92a3a8;
+  margin: 10px 0 16px 0;
+}
+
+#left-container input[type=text]:focus{
+  background: #ffffff;
+  color: #000000;
+}
+
+#left-container p{
+  color: #909ca0;
+  font-family: 'proximanovalight', sans-serif;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+#left-container .ta{
+  width: 350px;
+  height: 100px;
+  background: #f1f8fa;
+  font-size: 18px;
+  border: 1px solid #d0dbde;
+  margin: 10px 0 16px 0;
+}
+
+#left-container .ta:focus{
+  background: #ffffff;
+  color: #000000;
+}
+
+.invite-btn{
+  min-width: 115px;
+  min-height: 59px;
+  border: none;
+  background: url('/assets/new_style/img_friends/invite.png');
+}
+
+#left-container ul{
+  list-style-type: none;
+}
+
+.friend-container{
+  width: 310px;
+  margin:0 45px 10px 0;
+  float: left;
+}
+
+.friend-container img{
+  -moz-border-radius: 150px;
+  -webkit-border-radius: 150px;
+  border-radius: 150px;
+  border: 4px solid #d5dddf;
+  width: 45px;
+  height: 45px;
+}
+
+.friend-name{
+  font-family: 'proximanovalight', sans-serif;
+  color: #909ca0;
+  font-size: 20px;
+  display: inline;
+  margin-left: 10px;
+}
+
+.close{
+  min-width: 35px;
+  min-height: 31px;
+  background: url('/assets/new_style/img_friends/close-btn.png');
+  display: inline;
+  margin-top: 5px;
+  opacity: 1;
+}
+
+.close:hover{
+  background: url('/assets/new_style/img_friends/close-btn-h.png');
+}
+
+#right-container{
+  width: 230px;
+  padding: 0 30px 0 30px;
+}
+
+#right-container h3{
+  font-family: 'news-condensed', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+#right-container p{
+  color: #909ca0;
+  font-family: 'proximanovalight', sans-serif;
+  font-size: 18px;
+  line-height: 20px;
+}

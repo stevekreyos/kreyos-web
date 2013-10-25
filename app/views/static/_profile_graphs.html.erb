@@ -1,0 +1,115 @@
+<script>
+ $(function(){
+    	// daily
+	        $('#graph-cal').highcharts({
+	            chart: {
+	            	renderTo: 'graph-cal',
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Daily Summary'
+	            },
+	            xAxis: {
+	                categories: ["Today"]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Calories Burned'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0 5px 0 0;">{series.name}: </td>' +
+	                    '<td style="padding:0"><b> {point.y:.2f} cal.</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Calories',
+	                data: [ <%= @my_profile[0]['daily_activity'][0]['calories'] %> ]
+	            }]
+	        });
+	        
+	        
+	         $('#graph-km').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Daily Summary'
+	            },
+	            xAxis: {
+	                categories: ["Today"]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Kilometers Traveled'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0 5px 0 0;">{series.name}: </td>' +
+	                    '<td style="padding:0"><b> {point.y:.2f} KM.</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Kilometers',
+	                data: [ <%= @my_profile[0]['daily_activity'][0]['distance']['value'] %> ]
+	            }]
+	        });
+	        
+	        $('#graph-steps').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Daily Summary'
+	            },
+	            xAxis: {
+	                categories: ["Today"]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Steps Taken'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0 5px 0 0;">{series.name}: </td>' +
+	                    '<td style="padding:0"><b> {point.y:.2f}</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Steps',
+	                data: [ <%= @my_profile[0]['daily_activity'][0]['steps'] %> ]
+	            }]
+	        });
+	        
+    });
+</script>

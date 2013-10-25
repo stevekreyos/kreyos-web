@@ -1,0 +1,156 @@
+@charset "UTF-8";
+/* MyFriends Page's Tab and Page Content Styles*/
+
+#tab1, #tab2 { width:920px; height:auto; padding:0; margin:0; overflow: auto; overflow-x: hidden; }
+
+/* Manage Friends page */
+#dvManageFriends { width:100%; height:272px; overflow:auto; margin-left:5px; padding-bottom:20px; display:block !important; }
+#dvManageFriends ul { list-style:none; padding:0; margin:0; }
+#dvManageFriends li { width:270px !important; height:90px; background:#fafafa; border: none; margin:10px 35px 20px 0; display:block !important; float:left; padding:0; }
+#dvManageFriends li:hover { background: #fff; cursor:pointer; box-shadow: 0 0 6px rgba(0,0,0,0.2) }
+	
+	#dvManageFriends li h3 { font-family: Arial, Helvetica, Sans-serif; font-size:1.2em; font-weight:bold; color:#555; margin:5px 0 2px 0; padding:0; }
+
+	#dvManageFriends ul li img { display:block; height:82px; width:82px; border:4px solid #e4e4e4; margin:0 10px 0 0 !important; }
+	img.icons-sync { width:25px !important; height:25px !important; border:0 !important; }
+	#dvManageFriends ul li p { font-size: 11px; }
+	.sync-date { font-size:1em; color:#555; }
+	
+	.selectedFriend {width:268px; height:88px; display:block !important; background:rgba(0,0,0,0.3) url('../users/friends/icon-check.png') no-repeat 2px 1px; position:absolute; border:1px solid #a7d374; }
+	
+#dvManageFriends-bottom { display:block !important; width:890px; height: 60px; overflow: auto; border-top:1px dotted #bcbcbc; padding:10px 0 10px 5px; }
+
+#dvManageFriends-bottom ul { list-style:none; padding:0; margin:20px 0 0 0; }
+#dvManageFriends-bottom li, #dvManageFriends-bottom li:last-child { float:left; margin-right: 8px; padding: 5px 10px 5px 10px; border-radius: 4px; border: 0; }
+#dvManageFriends-bottom li:hover, .current-page { background: #68c000 !important; color:#fff !important; }
+#dvManageFriends-bottom ul li  { font-family:Arial, Helvetica, Sans-serif; font-size: 14px; font-weight:bold; color:#68c000; text-decoration: none; }
+#btnRemoveFriends { width:262px; height:40px; display:block; background: url('../users/friends/btn-RemoveFriend.png') no-repeat top left; margin-top:20px; float:right; cursor:pointer; }
+#btnRemoveFriends:hover { background: url('../users/friends/btn-RemoveFriend.png') no-repeat bottom left; }
+
+
+/* Find Friends page */
+
+/*#dvMailFriends { width:261px; height: auto; margin:10px 35px 0 5px; background: #fff; display:block !important; float:left; border:1px solid #e4e4e4; }*/
+#dvMailFriends { width:261px; height: auto; margin:10px 35px 0 5px; display:block !important; float:left; }
+#dvMailFriends ul { list-style: none; padding:0; margin:0; }
+#dvMailFriends li { padding:0; margin:0; border:none; }
+	#mailHeader { width:260px !important; height: 35px !important; background:#fff url('../users/friends/icon-mail.png') no-repeat 15px 12px !important; display:block !important; padding-top:10px; }
+	#mailHeader h5, #facebookHeader h5 { font-family: 'Exo', Arial, Helvetica, Sans-serif; font-size: 1.4em; color: #777; margin:0 0 0 55px; letter-spacing: 1px; font-weight: 00;  }
+	
+	#mailYM, #mailMSN { width:130px; height:95px; display:block !important; background: url('../users/friends/mail-friends-bg.png') repeat top !important; border-right:1px solid #e4e4e4; }
+	#mailMSN { border: none; }
+		#ym-logo { width:75px; height: 70px; margin:0 auto !important; padding-top:15px !important; }
+		#msn-logo { width:75px; height: 70px; margin:0 auto !important; padding-top:15px !important; }
+		#mailYM:hover, #mailMSN:hover { background:#efefef url('../users/friends/marker-arrow.png') no-repeat 0 -1px !important; } 
+
+
+#dvFacebookFriends { width:580px; height: auto; margin:10px 30px 15px 0; background: #fff; display:block !important; float:right; border:1px solid #e4e4e4;}
+#dvFacebookFriends ul { list-style: none; padding:0; margin:0; }
+#dvFacebookFriends li { padding:0; margin:0; border:none; float:none; }
+	#facebookHeader { width:580px; height: 35px !important; background:#fff url('../users/friends/icon-fb.png') no-repeat 15px 12px !important; display:block !important; padding-top:10px; border-bottom:1px solid #e4e4e4; }
+	#fbFriendList { width:580px; height:280px; overflow:auto; display:block !important; margin:10px 0 10px 0; }
+	.dummy-content { height:600px; width:508px; margin-left: 10px; }
+	
+	
+	
+/*friends*/
+#dvTab-Content-wrap { width:958px; height: auto; overflow:auto; margin:0 auto 50px auto; border:1px solid #ccc; border-radius:5px; }
+#dvActivities-menu-960 { height:50px; background:#ddd url('../../assets/common/dashboard/activityTab-bg.png') repeat-x top left; padding:5px; }
+#btn-manage-friends { height:39px; width:148px; background:url('../../assets/users/friends/Kreyos-friends-tab-ManageFriends.png') no-repeat top left; float:left; margin-right: 1px; }
+#btn-total-friends { width:137px; height:39px; background: url('../../assets/users/friends/Kreyos-friends-tab-InviteFriends.png')no-repeat top left; }
+#btn-manage-friends:hover, #btn-total-friends:hover, .active{ background-position: bottom center!important; }
+
+/* ------------------------------------------------- */
+
+#content
+{
+    background: #f4f4f4;
+    padding: 2em;
+    /*margin-bottom:60px;*/
+	height: auto;
+	min-height: 350px;
+	overflow: visible;
+	position: relative;
+	z-index: 2;	
+    /*-moz-border-radius: 0 5px 5px 5px;
+    -webkit-border-radius: 0 5px 5px 5px;
+    border-radius: 0 5px 5px 5px;
+    -moz-box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, .5);
+    box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, .5);
+    border-left:1px solid #bcbcbc;
+    border-right:1px solid #bcbcbc;
+    border-bottom:1px solid #bcbcbc;*/
+}
+
+
+#content h2, #content h3, #content p
+{
+    margin: 0 0 15px 0;
+}
+
+#content img { display:block; border:0; }
+
+
+/* --------------------------------------------- */
+
+.tab_content { display: none; }
+.tab_content img { margin-right:15px; }
+.tab_content h1 { margin:5px 0 0; line-height:0; }
+
+#tab1 { display:block; }
+#tabs_container { margin-top:-5px; }
+
+#tabs {
+    list-style: none;
+    padding: 5px 0 4px 0;
+    margin: 0 0 0 10px;
+    font: 0.75em arial;
+}
+
+#tabs li { float:left; margin-top:5px;}
+#tabs li a { /*background-color: blue;*/ text-decoration: none; }
+
+
+.fb_name { margin-left: 60px!important; margin-top: -33px!important; }
+.btn_fb_invite { float: right; margin-right: 15px; margin-top: -37px; }
+.ProfilePicture { position: relative; margin: -20px 0 0 0; }
+.friendInfo { display:block!important; padding: 20px 0 0 5px; height: auto;}
+.frmtxt { width: 300%!important; padding: 5px; }
+@-moz-document url-prefix() {
+   .frmtxt { width: 276%!important; padding: 5px; }
+}
+#modal-authenticate { width: 425px; left: 55%; }
+.modal-body { max-height: 400px; }
+.login-modal-body { max-height: 400px; }
+textarea, input:focus { outline-width: 0; }
+
+
+
+.fb-share-icon{
+	background: url('/assets/curebit/tweed_buttons.png') no-repeat 0 0;
+	float: left;
+	height: 43px;
+	width: 126px;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+.twitter-share-icon {
+	background: url('/assets/curebit/tweed_buttons.png') no-repeat -133px 0;
+	float: left;
+	height: 43px;
+	width: 126px;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+.email-icon {
+	background: url('/assets/curebit/tweed_buttons.png') no-repeat -266px 0;
+	float: left;
+	height: 43px;
+	width: 126px;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+.social-widgets a{
+	padding: 3px;
+}

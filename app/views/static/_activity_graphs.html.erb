@@ -1,0 +1,252 @@
+<script>
+ $(function(){
+    	// daily
+	        $('#graph-cal').highcharts({
+	            chart: {
+	            	renderTo: 'graph-cal',
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Daily Summary'
+	            },
+	            xAxis: {
+	                categories: ["Today"]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Calories Burned'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0 5px 0 0;">{series.name}: </td>' +
+	                    '<td style="padding:0"><b> {point.y:.2f} cal.</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Calories',
+	                data: [ <%= @daily[0]['calories'] %> ]
+	            }]
+	        });
+	        
+	        
+	         $('#graph-km').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Daily Summary'
+	            },
+	            xAxis: {
+	                categories: ["Today"]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Kilometers Traveled'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0 5px 0 0;">{series.name}: </td>' +
+	                    '<td style="padding:0"><b> {point.y:.2f} KM.</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Kilometers',
+	                data: [ <%= @daily[0]['distance']['value'] %> ]
+	            }]
+	        });
+	        
+	        $('#graph-steps').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Daily Summary'
+	            },
+	            xAxis: {
+	                categories: ["Today"]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Steps Taken'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0 5px 0 0;">{series.name}: </td>' +
+	                    '<td style="padding:0"><b> {point.y:.2f}</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Steps',
+	                data: [ <%= @daily[0]['steps'] %>]
+	            }]
+	        });
+	        
+	        
+	        // weekly
+	        $('#dv-graph-weekly').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Weekly Summary'
+	            },
+	            xAxis: {
+	                categories: [
+	                	<% @weekly[0]['chart_values'].each do |label| %>
+	                    	'<%= label['label'] %>',
+	                	<% end %>
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Kilometers (km)'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.2f} KM</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.2,
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Total Runs',
+	                data: [
+	                		<% @weekly[0]['chart_values'].each do |value| %>
+	                    	<%= value['value'] %>,
+	                		<% end %>
+	                      ]
+	            }]
+	        });
+	        
+	        // monthly
+	        $('#dv-graph-monthly').highcharts({
+	            chart: {
+	                type: 'column',
+	                width: 920
+	            },
+	            title: {
+	                text: 'Monthly Summary'
+	            },
+	            xAxis: {
+	                categories: [
+	                	<% @monthly[0]['chart_values'].each do |label| %>
+	                    	'<%= label['label'] %>',
+	                	<% end %>
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Kilometers (km)'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.2f} KM</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.2,
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Total Runs',
+	                data: [
+	                		<% @monthly[0]['chart_values'].each do |value| %>
+	                    	<%= value['value'] %>,
+	                		<% end %>
+	                      ]
+	            }]
+	        });
+	        
+	        // yearly
+	        $('#dv-graph-yearly').highcharts({
+	            chart: {
+	                type: 'column',
+	                width: 920
+	            },
+	            title: {
+	                text: 'Yearly Summary'
+	            },
+	            xAxis: {
+	                categories: [
+	                	<% @yearly[0]['chart_values'].each do |label| %>
+	                    	'<%= label['label'] %>',
+	                	<% end %>
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Kilometers (km)'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px;margin-left:40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.2f} KM</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.2,
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Total Runs',
+	                data: [
+	                		<% @yearly[0]['chart_values'].each do |value| %>
+	                    	<%= value['value'] %>,
+	                		<% end %>
+	                      ]
+	            }]
+	        });
+    });
+</script>

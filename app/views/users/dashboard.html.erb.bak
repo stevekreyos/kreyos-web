@@ -1,0 +1,444 @@
+<% content_for :subtitle do %>
+	Dashboard
+<%end%>
+
+<% content_for :head_extension do %>
+	<%= javascript_include_tag "bootstrap/bootstrap-datepicker" %>
+	<%= javascript_include_tag "users/dashboard" %>
+  	<%= javascript_include_tag "highcharts/highcharts" %>
+  	<%= stylesheet_link_tag    "users/dashboard-v2", :media => "all" %>
+  	<%= stylesheet_link_tag    "bootstrap/datepicker" %>
+	<!-- <%= javascript_include_tag "highcharts/modules/exporting" %> -->
+<% end %>
+
+<script>
+	$(document).ready(function(){
+		
+		$('#GoalSExpires').datepicker({
+			format: "yyyy-mm-dd"
+		});
+		
+		$('#eGoalSExpires').datepicker({
+			format: "yyyy-mm-dd"
+		});
+		
+		$('#btnCall2ACt').click(function(){
+			$('#GoalDesc').val("");
+			$('#GoalCal').val("");
+			$('#GoalDistance').val("");
+			$('#GoalSteps').val("");
+			$('#GoalSExpires').val("");
+		});
+		
+		$('#btnGoalSave').click(function(){
+				frm_goal_validate();
+				
+		});
+		
+		$('#btnGoalSaveEdit').click(function(){
+				frm_edit_goal_validate();
+				$('#editGoalModal').modal("hide");
+		});
+		
+		$('#btnGoalDel').click(function(){
+			var goal_id = $('#goal_id').val();
+			$('#deletGoalModal').modal("hide");
+			
+			window.location = "/delete_goal?goalID="+ goal_id;
+		})
+		
+		function frm_goal_validate(){
+			var txtDesc = $('#GoalDesc').val().trim();
+			var txtCal = $('#GoalCal').val().trim();
+			var txtDistance = $('#GoalDistance').val().trim();
+			var txtSteps = $('#GoalSteps').val().trim();
+			var txtExpires = $('#GoalSExpires').val().trim();
+			
+			if(txtDesc == '' || txtCal == '' || txtDistance == '' || txtSteps == '' || txtExpires == ''){
+				alert("All fields are required");
+				return false;
+			}else{
+				frm_goal = document.getElementById('frm_goals');
+				frm_goal.submit();
+			}
+		}
+		
+		function frm_edit_goal_validate(){
+			var txtDesc = $('#eGoalDesc').val().trim();
+			var txtCal = $('#eGoalCal').val().trim();
+			var txtDistance = $('#eGoalDistance').val().trim();
+			var txtSteps = $('#eGoalSteps').val().trim();
+			var txtExpires = $('#eGoalSExpires').val().trim();
+			
+			if(txtDesc == '' || txtCal == '' || txtDistance == '' || txtSteps == '' || txtExpires == ''){
+				alert("All fields are required");
+				return false;
+			}else{
+				frm_edit_goal = document.getElementById('frm_edit_goals');
+				frm_edit_goal.submit();
+			}
+		}
+		
+		$("#GoalCal, #GoalDistance, #GoalSteps, #eGoalCal, #eGoalDistance, #eGoalSteps").keydown(function(event) {
+	        // Allow: backspace, delete, tab, escape, and enter
+	        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+	             // Allow: Ctrl+A
+	            (event.keyCode == 65 && event.ctrlKey === true) || 
+	             // Allow: home, end, left, right
+	            (event.keyCode >= 35 && event.keyCode <= 39)) {
+	                 // let it happen, don't do anything
+	                 return;
+	        }
+	        else {
+	            // Ensure that it is a number and stop the keypress
+	            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+	                event.preventDefault(); 
+	            }   
+	        }
+	    });
+	    
+	});
+</script>
+
+<style>
+	.achievments_head { background: #854cb6; margin: 7px !important; border-radius: 4px; font-weight: normal;}
+	.hand-cursor { cursor: pointer; }
+	.current_activity { background-position: bottom left!important; }
+	#frm_goals label {
+		display: block;
+		margin: 10px 0px 5px;
+		font-size: 13px;
+		font-weight: bold;
+	}
+	.form_text_input {
+		width: 100%;
+		height: 30px;
+		font-size: 14px;
+		padding-left: 8px;		
+	}
+	.friendAvatar img{
+		width: 61px;
+	}
+	#dvUserPanel { padding: 0px 0px 10px; }
+</style>
+<%=render :partial => "static/dashboard_graphs"%>
+<%=render :partial => "static/referral_modal"%>
+
+		<% if flash[:notification] %>
+			<div class="alert alert-success" style="text-align: center;">
+			  <button type="button" class="close" data-dismiss="alert">&times;</button>
+			  	<%=raw flash[:notification]%>
+			</div>
+		<% end %>
+
+		<% if @check_if_expired['status'] == -1  || @check_if_expired['status'].nil? %>
+			<div id="dvCallToAct" align="center">
+				<img src="assets/common/dashboard/Call2Act.png">
+				<a href="#setGoalModal" data-toggle="modal"><div id="btnCall2ACt"></div></a>
+			</div>			
+		<% end %>
+	
+		<div id="dvDashboardContent">
+			<!-- Dashboard Left Pane -->
+			<div id="dvDashboardLeft">
+				
+					<%=render :partial => "static/dashboard_tab"%>
+					
+					<!-- Activity : NO STEP BADGE / FLOOR BADGE -->
+					<div style="height:80px;">
+						<div id="dvMoreSteps">
+							<div class="moreStepsFloors">No <strong>Step Badge</strong> yet today.<br />
+							Get more Steps!</div>
+							<img src="assets/common/dashboard/BlankBadge.png" />
+						</div>
+						<div id="dvMoreFloors">
+							<div class="moreStepsFloors">No <strong>Floor Badge</strong> yet today.<br />
+							Get more Floors!</div>
+							<img src="assets/common/dashboard/BlankBadge.png" />
+						</div>
+						<br clear="both" />
+					</div>
+				</div>
+				
+				<!-- STATS TAB ( CALORIES / STEPS / FLOORS / ACTIVE TIME )-->			
+				<div id="dvDashB-Stats">
+					<div id="dvStats-menu">
+						<!-- Activity-Tabs Start -->
+				    	<!-- Calories Activity Tab -->
+				        <div id="bnt-CaloriesBurned" class="hand-cursor current_activity"></div>
+				        <!-- Steps Activity Tab -->
+				        <div id="bnt-Steps" class="hand-cursor"></div>
+				        <!-- Kilograms Activity Tab -->
+				        <div id="bnt-Kilometers" class="hand-cursor"></div>
+						<!-- Activity-Tabs End -->
+						<!-- <div id="bnt-Floors"></div>
+						<div id="bnt-ActiveTime"></div> -->
+						<br clear="both">
+					</div>
+					<div id="dv-graph-calories" style="width: 635px; height: auto;"></div>
+					<div id="dv-graph-steps" style="width: 635px; height: auto;display:none;'"></div>
+					<div id="dv-graph-kilometers" style="width: 635px; height: auto;display:none;"></div>
+					<!-- <div id="dvSampleGraph">
+						<img src="assets/common/dashboard/toolTip.png" class="toolTip"/>
+					</div> -->
+				</div>
+				
+				
+				<!-- FRIENDS TAB -->
+				<div id="dvDashB-Friends">
+					<div id="dvFriends">
+						<img src="assets/common/dashboard/icon-activity.png" /> 
+						<h1>Leaderboards</h1>
+						
+						<!-- <div id="dvFriendsMenu">
+							<div id="bnt-SeeAll"></div>
+							<div id="bnt-FindFriends"></div>
+						</div> -->
+						<br />
+						<hr />
+						<!-- <div id="dvFrienRankingTitle">
+							<h3>Rankings based on a 7-Day Step Total</h3>
+						</div> -->
+						
+						<!-- Friends : Leaderboards -->
+						
+						<!-- Friends : RANK 1 -->
+						<% @dashboard[0]['leaderboard'].first(5).each do |leaderboard| %>
+							<div class="friendAvatar">
+								<% if leaderboard['player_name']['uid'] == 'none' %>
+                            		<img src="assets/common/dashboard/avatar-friends00.png" />
+                            	<% else %>
+                            		<img src="http://graph.facebook.com/<%= leaderboard['player_name']['uid']%>/picture?width=61&height=59" />
+                                <% end %>								
+							</div>
+							<div class="friendContainer">
+								<div class="friendText">
+									<span><%= leaderboard['player_name']['name'] %></span>
+									<h4><%= number_with_precision(leaderboard['points'].to_s.split('.')[0], :precision  => 0, :delimiter => ',') %> pts.</h4>
+									
+								</div>
+								<div class="friendRank">
+									<h2 class="fLeft"><%= leaderboard['rank'] %></h2> <img src="assets/common/dashboard/icon-00.png" />
+								</div>
+								<div class="clear-float"></div>
+							</div>
+						<% end %>
+					</div>
+				</div>
+				
+				<br /><br />
+				
+			</div>
+			
+			
+			<!-- Dashboard Right Pane -->
+			<div id="dvDashboardRight">
+				<!-- <div id="dvSideBar-KickOff">
+					<div id="dvKickOff-Header">
+						<h3>Kickoff the Program</h3>
+						<img src="assets/common/dashboard/icon_minimize.png">
+					</div>
+					<div id="dvProgressBar">
+						<img src="assets/common/dashboard/progressBar.png">
+						29% Complete
+					</div>
+					<div id="dvTasks">
+						<h3>Remaining Tasks to Complete</h3>
+						<p><img src="assets/common/dashboard/bullet-tasks.png" />Upgrade your weight tracker</p>
+						<p><img src="assets/common/dashboard/bullet-tasks.png" />Log today's workout</p>
+						<p><img src="assets/common/dashboard/bullet-tasks.png" />View today's fitness plan</p>
+						<p><img src="assets/common/dashboard/bullet-tasks.png" />View your weekly shopping list</p>
+					</div>
+				</div> -->
+				
+				<!-- SIDEBAR : Badges & Achievements -->
+				
+				<div id="dvSideBar-TopBadges">
+					<div id="dvSidebar-Tabs" >
+						<div id="dvTopBadgesTab" class="dvTab-bg">
+							<div id="dvAchivements-Header">
+								<h3 class="achievments_head">My Achievements</h3>
+							</div>
+						</div>
+						<!-- <div id="dvMyAchievementsTab" class="dvTab-bg">
+							My Avhievements
+						</div> -->
+						<div class="clear-float"></div>
+					</div>
+					
+					<div id="dvUserPanel">
+						<img src="assets/common/dashboard/BadgesTab-avatar.png" />
+						<div id="dvUserName">
+							<div style="width: 125px;"><h2><%= logged_user['name'] %></h2></div>
+							<br />
+							<p>
+								<% @level.sort! { |a,b| a[:name] <=> b[:name] }.last(1).each do |current_level| %>
+									<strong class="lvl-current"><%= current_level[:name] %></strong>
+								<% end %>
+								<br />							
+								<strong class="lvl-points"><%= number_with_precision(@dashboard[0]['points'], :precision => 0, :precision  => 0, :delimiter => ',') %> Points</strong>
+								<br />
+								<strong class="lvl-rewards"><%= @dashboard[0]['badge'].count %> Rewards</strong>
+							</p>
+						</div>
+					</div>
+					
+					<!-- <div id="dvLevelBar">
+						<div class="currentLevel-badge"><img src="assets/common/dashboard/lvl-1-badge.png" /><br /><strong>Level 1</strong></div>
+						<div class="levelProgresssBar"><img src="assets/common/dashboard/levelBar.png" /></div>
+						<div class="nextLevel-badge"><img src="assets/common/dashboard/lvl-2-badge.png" /><br /><strong>Level 2</strong></div>
+					</div> -->
+					
+					<div id="dvRecentAcvievements">
+						<h2>Achievements</h2>
+						<!-- <img src="assets/common/dashboard/badges.png"> -->
+						<% @dashboard[0]['badge'].sort! {|a,b| a['created_at'] <=> b['created_at']}.first(4).each do |badge|%>
+							<img src="<%= badge['image'] %>" title="<%=badge['name']%>" style="width:50px;">
+						<% end %>
+						<br />
+						<!-- <a href="#mdl-badge" data-toggle="modal" style="text-decoration: none;margin-top: 10px;"><p>See all badges</p></a> -->
+						<a href="/badges" style="text-decoration: none;margin-top: 10px;"><p>See all badges</p></a>
+					</div>
+				</div>
+				
+				<!-- SIDEBAR : Friends' Recent Activities -->
+				<div id="dvSideBar-RecentActivites">
+					<div id="dvRecentActivites-Header">
+						<h3>Recent Achievements</h3>
+					</div>
+					
+					<div id="dvRecentActivities-Content">
+                          <% @dashboard[0]['recent_activity'].each do |ra| %>
+                               <div class="activity-wrap">
+                                    <div class="friendAvatarBox">
+                                    	<% if ra['player_name']['uid'] == 'none' %>
+                                    		<img src="assets/common/dashboard/recent-activities-avatar.png" />
+                                    	<% else %>
+                                    		<img src="http://graph.facebook.com/<%= ra['player_name']['uid']%>/picture?width=36&height=36" />
+                                        <% end %>
+                                    </div>
+                                    <div class="activityTxtBox">
+                                         <% if ra['player_name']['name'].size > 25 %>
+                                              <h4 title="<%= ra['player_name']['name'] %>"><%= truncate(ra['player_name']['name'], :length => 22) %></h4>
+                                         <% else %>
+                                              <h4 title="<%= ra['player_name']['name'] %>"><%= ra['player_name']['name'] %></h4>
+                                         <% end %>
+                                         
+                                         <% if ra['type'] == 'level' %>
+                                              <p style="width:160px;">has just reached <strong><%= ra['name'] %></strong></p>
+                                         <% elsif ra['type'] == 'achievement' %>
+                                              <p style="width:160px;">has just unlocked <strong><%= ra['name'] %> Badge</strong></p>
+                                         <% end %>
+                                         <p><strong class="activityTime"><%= ra['created_at']%></strong></p>
+                                         
+                                    </div>
+                                    <div class="activityBadgeIcon"><img src="assets/common/dashboard/icon-trophy.png"></div>
+                               </div>
+                          <% end %>
+                     </div>
+				</div>
+				
+			</div>
+			
+			<br clear="both">
+		</div>
+
+<!-- Modal -->
+<div id="mdl-badge" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+    <h3 id="myModalLabel">Badges</h3>
+  </div>
+  <div class="modal-body" style="min-height: 400px;">
+	<% @dashboard[0]['badge'].sort {|a,b| a['name'] <=> b['name']}.each do |badge|%>
+		<div style="text-align:center; float:left;padding-right:10px;">
+			<img src="<%= badge['image'] %>" title="<%=badge['hint']%>" style="width:50px;">
+			<p><%= badge['name'] %></p>
+		</div>
+	<% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
+<div id="setGoalModal" style="width: 458px!important;margin-left: -220px;top: 5%!important;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Set your Daily Goals</h3>
+  </div>
+  <div class="modal-body"> 
+  	<form action="/save_goals" id="frm_goals" method="post">
+		<div style="margin:0 auto;width:85%;">
+			<div><label for="GoalDesc">Description</label></div>
+			<div><input class="form_text_input" type="text" id="GoalDesc" name="goal[description]" /></div>
+
+			<div><label for="GoalCal">Target Calories</label></div>
+			<div><input class="form_text_input" type="text" id="GoalCal" name="goal[calories]" /></div>
+
+			<div><label for="GoalDistance">Target Distance (km)</label></div>
+			<div><input class="form_text_input" type="text" id="GoalDistance" name="goal[distance]" /></div>
+			<div><label for="GoalSteps">Target Steps</label></div>
+			<div><input class="form_text_input" type="text" id="GoalSteps" name="goal[steps]"/></div>
+
+			<div><label for="GoalSExpires">Goals expires at (XXXX-XX-XX)</label></div>
+			<div><input class="form_text_input" type="text" id="GoalSExpires" name="goal[expires]" /></div>
+		</div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="btnGoalSave">Save Goals</button>
+  </div>
+</div>
+
+
+<% unless @get_goal_info.nil? %>
+	<div id="editGoalModal" style="width: 458px!important;margin-left: -220px;top: 5%!important;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Edit your Daily Goals</h3>
+	  </div>
+	  <div class="modal-body"> 
+	  	<form action="/save_edit_goals" id="frm_edit_goals" method="post">
+			<div style="margin:0 auto;width:85%;">
+				<div><label for="eGoalDesc">Description</label></div>
+				<div><input class="form_text_input" type="text" id="eGoalDesc" name="egoal[description]" value="<%= @get_goal_info['description']%>" /></div>
+	
+				<div><label for="eGoalCal">Target Calories</label></div>
+				<div><input class="form_text_input" type="text" id="eGoalCal" name="egoal[calories]" value="<%= @get_goal_info['calories']%>" /></div>
+	
+				<div><label for="eGoalDistance">Target Distance (km)</label></div>
+				<div><input class="form_text_input" type="text" id="eGoalDistance" name="egoal[distance]" value="<%= @get_goal_info['kilometers']%>" /></div>
+				<div><label for="eGoalSteps">Target Steps</label></div>
+				<div><input class="form_text_input" type="text" id="eGoalSteps" name="egoal[steps]" value="<%= @get_goal_info['steps']%>" /></div>
+	
+				<div><label for="eGoalSExpires">Goals expires at (XXXX-XX-XX)</label></div>
+				<div><input class="form_text_input" type="text" id="eGoalSExpires" name="egoal[expires]" value="<%= @get_goal_info['expires_at']%>" /></div>
+			</div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	    <button class="btn btn-primary" id="btnGoalSaveEdit">Save Goals</button>
+	  </div>
+	</div>
+	
+	
+	<div id="deletGoalModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Delete Goal Confirmation</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p>Are you sure you want to delete your goal?</p>
+	  </div>
+	  <div class="modal-footer">
+	    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+	    <a href="#" class="btn btn-primary" id="btnGoalDel">Yes</a>
+	  </div>
+	</div>
+	<input type="text" id="goal_id" value="<%= @get_goal_info['id']%>">
+
+<% end %>

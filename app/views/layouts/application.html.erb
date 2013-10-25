@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+  <title>Kreyos - <%= yield :subtitle %></title>
+  
+  	<meta name="twitter:card" content="photo">
+	<meta name="twitter:url" content="http://kreyos.nesventures.net">
+	<meta name="twitter:domain" content="">
+	<meta name="twitter:site" content="@LianLovesVham">
+	<meta name="twitter:creator:id" content="">
+	<meta name="twitter:title" content="Kreyos Twitter Title">
+	<meta name="twitter:description" content="Kreyos twtitter description here">
+	<!-- <meta name="twitter:image:src" content="http://www.hyperarts.com/_img-fb/Image-SRC_HyperArts.png"> -->
+	<meta name="twitter:image:src" content="http://www.qualitywallpapers.net/w/media/original/2013/02/23/Twitter-bird-logo-PNG.png">
+	<meta content='593710007324797' property='fb:app_id'/>
+  	
+  	<meta property="og:title" content="Kreyos Title"/>
+	<meta property="og:url" content="http://kreyos.nesventures.net"/>
+	<meta property="og:site_name" content="Kreyos Sandbox"/>
+	<meta property="og:type" content="website" />
+	<!-- <meta property="og:image" content="http://www.hyperarts.com/_img-fb/Image-SRC_HyperArts.png" /> -->
+	<meta content='https://lh3.googleusercontent.com/_dzq0x75P67s/TcK-Us9qA3I/AAAAAAAACfY/1HtdhdislI8/s72-c/like-for-blogger.png' property='og:image'/>
+	<meta property="og:description" content="Kreyos Description" />
+	
+  
+  <%= stylesheet_link_tag    "styles", :media => "all" %>
+  <%= stylesheet_link_tag    "navigation", :media => "all" %>
+  <%= stylesheet_link_tag    "footer", :media => "all" %>
+  <%= stylesheet_link_tag    "users/dashboard-v2", :media => "all" %>
+  <%= stylesheet_link_tag    "http://fonts.googleapis.com/css?family=Exo:200,400,500,600,700,800,200italic,400italic,500italic,600italic,700italic,800italic", :media => "all" %>
+  <%= javascript_include_tag "http://code.jquery.com/jquery-1.7.2.min.js" %>
+  <%= javascript_include_tag "facebook" %>
+  <%= javascript_include_tag "placeholder" %>
+  
+  <link href="/assets/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+  <script src="/assets/bootstrap/bootstrap.min.js"></script>
+  <div id="fb_root"></div>
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <% if session[:user_id].nil? %>
+	<%= javascript_include_tag "users/login-message" %>
+  <% end %>
+   
+  <style>
+  	a:focus { outline: none; }
+  </style>
+  
+  <script>
+	$(document).ready(function(){
+		$.fn.placeholder();
+		
+		$('#headSearch').keypress(function(event){
+        	var search_value = $(this).val().trim();
+        	
+        	if(event.keyCode == 13 && search_value != "" ){
+        		window.open("http://kreyos.nesventures.net:8080/index.php/catalogsearch/result/?q=" + search_value);	
+        	}
+        });
+		
+	});
+</script>
+
+<% if session[:modal] == 1%>
+	<script>
+	$(function(){
+		$("#myModal").modal('show');
+	});
+	</script>
+	<% session[:modal] = nil %>
+<% end %>
+
+</head>
+<body>
+<div id="dvHead">
+	<div id="dvHead-wrap">
+		<div id="dvLogo"><a href="/"><img src="/assets/common/logo-kreyos.png" /></a></div>
+		<div id="dvHeaderElements">
+			<div id="dvSearch" class="rounded-corner4 shadow-inset" >
+				<input type="text" id="headSearch" placeholder="Search entire store"/>
+			</div>
+			<div id="btn-LoginFb"></div>
+		</div>
+		<div id="dvNavigation">
+			<nav class="text-shdw-white">
+				<%=render :partial => "static/menu"%>
+			</nav>
+		</div>
+	</div>
+</div>
+<div id="dvPage">
+	<div id="dvPage-wrap">
+		
+		<%= yield %>
+	</div>
+</div>
+<div id="dvFoot">
+	<div id="dvFoot-wrap">
+		<%=render :partial => "static/footer"%>
+	</div>
+</div>
+</body>
+
+</html>
+
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <!-- close button-->
+    <h3 id="myModalLabel">Kreyos - Message</h3> <!-- Header-->
+  </div>
+  <div class="modal-body"> <!-- Body -->
+    You should buy our product first, <a href="http://kreyos.nesventures.net:8080/" target="_blank">Magento Shop</a>
+  </div>
+  <div class="modal-footer"> <!-- Footer -->
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+<div id="login-message-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <!-- close button-->
+    <h3 id="myModalLabel">Kreyos - Message</h3> <!-- Header-->
+  </div>
+  <div class="modal-body"> <!-- Body -->
+    You need first to login to access this page. Click the "Facebook" icon to login.
+  </div>
+  <div class="modal-footer"> <!-- Footer -->
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

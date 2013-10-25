@@ -1,0 +1,42 @@
+<ul >
+	<!-- <li><a href="/home" class="menu" style="<%if request.path_parameters[:action] == "home"%>color:#7c43ad<%end%>">Home</a></li> -->
+	<li><a href="/dashboard" class="menu" style="<%if request.path_parameters[:action] == "dashboard"%>color:#7c43ad<%end%>">Dashboard</a></li>
+		<ul>
+			<li> Sublink 1 </li>
+			<li> Sublink 2 </li>
+			<li> Sublink 3 </li>
+		</ul>
+		<li><a href="/activities" class="menu" style="<%if request.path_parameters[:action] == "activity"%>color:#7c43ad<%end%>">Activities</a></li>
+		<li><a href="/friends" class="menu" style="<%if request.path_parameters[:action] == "friends"%>color:#7c43ad<%end%>">Friends</a></li>
+		<% if !session[:user_id].nil? %>
+				<li>
+					<dl id="sample" class="dropdown">
+				        <dt>
+				        	<div id="dvProfileBox">
+								<a href="#"><img src="http://graph.facebook.com/<%= logged_user['uid']%>/picture?type=square" class="ProfileAvatar"/></a>
+								<a href="#"><img src="assets/common/dashboard/icon-profileArrow.png" class="ProfileArrow"></a>
+							</div>
+						</dt>
+				        
+				        <dd id="ProfileDD-txt">
+				        	
+				            <ul style="z-index:999;">
+				            	<div id="dvProfileName">
+				        		<h3>
+					        		<% if logged_user['name'].size > 18 %>
+										<span class="logged-user-name" data-toggle="dropdown"><%= truncate(logged_user['name'], :length => 18)%></span></a>
+									<% else %>
+										<span class="logged-user-name" data-toggle="dropdown"><%= logged_user['name']%></span></a>
+									<% end %>
+								</h3>
+				        		</div>
+				                <li><a href="/badges"><img src="assets/common/icons/icons-profileBadges.png" />Badges</a></li>
+				                <li><a href="/profile"><img src="assets/common/icons/icons-profileProfile.png" />Profile</a></li>
+				                <li><a href="/settings"><img src="assets/common/icons/icons-profileSettings.png" />Settings</a></li>
+				                <li><a href="/signout"><img src="assets/common/icons/icons-profileLogout.png" />Logout</a></li>
+				            </ul>
+				        </dd>
+				    </dl>
+				</li>
+		<% end %>
+	</ul>

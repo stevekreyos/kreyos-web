@@ -1,0 +1,63 @@
+<!-- For Daily -->
+<div id="dvActivities_1" class="tab_content">
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['daily_activity'][0]['steps'].to_i %></div> 
+	    <div class="counter-desc">steps taken</div>
+	</div>
+	<div id="summary-counter" style="border-right: 1px solid #e2e8e8; border-left: 1px solid #e2e8e8;">
+	    <div class="counter"><%= @dashboard[0]['daily_activity'][0]['distance']['value'].to_i %></div> 
+	    <div class="counter-desc">km traveled</div> 
+	</div>
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['daily_activity'][0]['calories'].to_i %></div> 
+	    <div class="counter-desc">calories burned</div> 
+	</div>
+</div>
+
+<!-- For Weekly -->
+<div id="dvActivities_2" class="tab_content">
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['weekly_activity'][0]['steps'].to_i %></div> 
+	    <div class="counter-desc">steps taken</div>
+	</div>
+	<div id="summary-counter" style="border-right: 1px solid #e2e8e8; border-left: 1px solid #e2e8e8;">
+	    <div class="counter"><%= @dashboard[0]['weekly_activity'][0]['distance']['value'].to_i %></div> 
+	    <div class="counter-desc">km traveled</div> 
+	</div>
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['weekly_activity'][0]['calories'].to_i %></div> 
+	    <div class="counter-desc">calories burned</div> 
+	</div>
+</div>
+
+<!-- For Monthly -->
+<div id="dvActivities_3" class="tab_content">
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['monthly_activity'][0]['steps'].to_i %></div> 
+	    <div class="counter-desc">steps taken</div>
+	</div>
+	<div id="summary-counter" style="border-right: 1px solid #e2e8e8; border-left: 1px solid #e2e8e8;">
+	    <div class="counter"><%= @dashboard[0]['monthly_activity'][0]['distance']['value'].to_i %></div> 
+	    <div class="counter-desc">km traveled</div> 
+	</div>
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['monthly_activity'][0]['calories'].to_i %></div> 
+	    <div class="counter-desc">calories burned</div> 
+	</div>
+</div>
+
+<!-- For Yearly -->
+<div id="dvActivities_4" class="tab_content">
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['yearly_activity'][0]['steps'].to_i %></div> 
+	    <div class="counter-desc">steps taken</div>
+	</div>
+	<div id="summary-counter" style="border-right: 1px solid #e2e8e8; border-left: 1px solid #e2e8e8;">
+	    <div class="counter"><%= @dashboard[0]['yearly_activity'][0]['distance']['value'].to_i %></div> 
+	    <div class="counter-desc">km traveled</div> 
+	</div>
+	<div id="summary-counter">
+	    <div class="counter"><%= @dashboard[0]['yearly_activity'][0]['calories'].to_i %></div> 
+	    <div class="counter-desc">calories burned</div> 
+	</div>
+</div>

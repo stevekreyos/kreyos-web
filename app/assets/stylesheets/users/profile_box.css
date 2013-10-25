@@ -1,0 +1,13 @@
+#dvProfileBox { width:90px; height:68px; background:url('../../assets/common/dashboard/profileTab-bg.png') no-repeat; margin:-32px -8px 0 -10px; position:relative; }
+@-moz-document url-prefix() {
+
+   #dvProfileBox { margin:-20px -8px 0 -10px!important; }
+
+}
+#dvProfileBox img.ProfileAvatar { float:left; margin:10px 0 0 18px; width:42px; height: 42px; border:solid 1px #FFFFFF;}
+#dvProfileBox img.ProfileArrow { float:left; margin: 30px 0 0 5px; }
+/* #dvAvatar { height:41px; width:42px; border:1px solid #fff; position:absolute; left:16px; top:8px; } */
+/* #dvProfile-Arrow { height:7px; width:10px; position:absolute; right:14px; top:15px; } */
+
+#dvProfileName { width:149px; height:24px; background: url('../../assets/common/icons/separatorProfile.png') no-repeat bottom center; margin-left:3px; margin-bottom:8px; }
+#dvProfileName h3  { color:#783fa9; margin:10px 0 0 15px; vertical-align:top; }

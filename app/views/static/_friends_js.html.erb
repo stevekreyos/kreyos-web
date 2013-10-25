@@ -1,0 +1,76 @@
+<script>
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+ 
+
+	// Twitter
+	$.getScript("http://platform.twitter.com/widgets.js", function(){
+	   function handleTweetEvent(event){
+	     if (event) {
+	      	$.ajax({
+				type: "post",
+				url: "http://rfp.kreyos.nesventures.net/campaigns/insert_activities_2/twitter/<%= logged_user['email'] %>/<%=@tracker%>/tweet/<%=@campaign_id%>"
+			});
+	     }
+	   }
+	   twttr.events.bind('tweet', handleTweetEvent);  
+	 });
+
+ 
+	$(function(){
+		$('#btnemail').click(function(){
+			$("#email_form").slideToggle();
+		});
+		
+		$('#btnEmailSend').click(function(){
+			var emailRegEx = /^[ A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z ]{2,4}$/i;
+			var to 		= $('#txtto').val().trim();
+			var subject = $('#txtSubject').val().trim();
+			var message = $('#taMessage').val().trim();
+			
+			if(to == "" || to == "Friend's email"){
+				alert("Email is required");
+			}else if(to.search(emailRegEx) == -1){
+				alert("Invalid Email address");
+			}else if(subject == ""){
+				alert("Subject is required");
+			}else if(message == ""){
+				alert("Message is required");
+			}else{
+				sendEmail(to, subject, message);	
+			}
+		});
+	});
+	
+	function sendEmail(to, subject, message){
+		$.ajax({
+			type: "get",
+			url: "http://rfp.kreyos.nesventures.net/campaigns/referral_email",
+			data: {to: to, subject: subject, message: message},
+			dataType:"jsonp",
+			jsonp: "jsonp",
+			success: function(){
+				alert("Email Sent!");
+				$('#txtto').val("");
+				$.ajax({
+					type: "post",
+					url: ""
+				});
+			},
+			error: function(){
+				alert("Email sent!");
+				$('#txtto').val("");
+				$.ajax({
+					type: "post",
+					url: "http://rfp.kreyos.nesventures.net/campaigns/insert_activities_2/email/<%= logged_user['email'] %>/<%=@tracker%>/email/<%=@campaign_id%>"
+				});
+			}	
+		});
+	}
+</script>

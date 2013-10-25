@@ -1,0 +1,78 @@
+<%= javascript_include_tag "timer/countdown" %>
+<script>
+	$(function(){
+		$('#modal-referral').modal("show");
+	});
+</script>
+
+	<style>
+		.landing_gift_icon { width: 150px; float:left; }
+		.landing_fbdesc { font-family:Tahoma; font-size:15px; float: left; width: 62%; padding-top: 40px; }
+		.landing_sub_fbdesc { font-size:25px;}
+		.dvHow { margin-top: 30px; float: left; width: 205px; padding-right: 10px; margin-left:30px; }
+		.dvQuestions { margin-top: 30px;float: left; }
+		.how_title { font-weight: bold; font-size: 14px; color: orange; }
+		.landing_btn_proceed { text-align:center; color:#fff; font-weight:bold; width:100%; border:solid 1px #ff8604; float:left; padding: 5px; cursor:pointer;background: orange; margin-top:5px; margin-left: -6px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
+		.landing_timer { margin: 175px 0 0 0; }
+		.input-text-url {
+			width: 285px;
+			height: 30px;
+			font-size: 14px;
+			padding-left: 8px;
+		}
+	</style>
+	
+	
+<% unless params[:tracker].nil? || params[:tracker].empty? %>
+
+	<div id="modal-referral" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:480px;margin-left:-230px!important;">
+	  
+	  <div class="modal-body">
+	  		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  		
+		    <div><img src="/assets/curebit/deal_default.png" class="landing_gift_icon" /></div>
+			
+			<div class="landing_fbdesc">
+				<div>Special Offer for Friends</div>
+				<div class="landing_sub_fbdesc"><%= @fb_desc || "error" %></div>
+			</div>
+			<div class="landing_timer" align="center">
+				<script type="application/javascript">
+				var test1 = new Countdown({
+	                              year	: <%= Date.parse(@time).strftime("%Y") || 0 %>, 
+	                              month	: <%= Date.parse(@time).strftime("%m") || 0 %>, 
+	                              day	 : <%= Date.parse(@time).strftime("%d") || 0 %>, 
+	                              hour	: <%= Date.parse(@time).strftime("%H") || 0 %>,
+	                              minute	: <%= Date.parse(@time).strftime("%M") || 0 %>, 
+	                              second	: 0,	 // < - no comma on last item!!
+	                              rangeHi:"month",
+	                              width:300,
+	                              height:60,
+	                              style:"flip",
+		                          onComplete: countdown_complete
+	                        });
+	                        
+	                        function countdown_complete(){
+	                        	$('#dvTimer').html("<p style='font-size:20px; margin-left:-20px;'>TIME'S UP! The duration time of promo has ended!</p>");
+	                        }
+				</script>
+			</div>
+			<div class="dvHow">
+				<p class="how_title">How does this deal work?</p>
+				<p><%= @rebate %></p>
+				<p><%= @payment_method %></p>
+			</div>
+			
+			<div class="dvQuestions">
+				<p class="how_title">Questions?</p>
+				<p>Contact Us <br />
+			    <a href="mailto:support@kreyos.com" style="text-decoration: none;">support@kreyos.com</a> <br />
+				1061 Dewey St. SBMA <br />
+				Olongapo City, Philippines 2200</p>
+			</div>
+			
+			<a href="<%= @campaign_url %>" id="btn-proceed"><div class="landing_btn_proceed">Proceed >></div></a>
+	  </div>
+	</div>
+
+<%end%>

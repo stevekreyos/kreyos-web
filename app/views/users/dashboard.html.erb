@@ -1,0 +1,396 @@
+<% content_for :subtitle do %>
+	Dashboard
+<%end%>
+
+<% content_for :include_css do %>
+	<%= stylesheet_link_tag "new_style/dashboard-kreyos" %>
+	<%= stylesheet_link_tag "bootstrap/datepicker" %>
+	<%= stylesheet_link_tag "slider_datepicker/slider" %>
+<% end %>
+
+<% content_for :include_js do %>
+	<%= javascript_include_tag "users/dashboard"%>
+	<%= javascript_include_tag "bootstrap/bootstrap-datepicker" %>
+	<%= javascript_include_tag "slider_datepicker/bootstrap-slider" %>
+<% end %>
+
+<style>
+	#heightErrorMessage, #weightErrorMessage, #countryErrorMessage { margin-bottom: 15px!important; }
+	.goal-name:focues { outline: none!important; }
+</style>
+
+<%=render :partial => "static/modal_profile"%>
+
+<div id="dashboard-container" style="margin: 90px auto;">
+    <div id="left">
+    	<% if flash[:notification] %>
+			<div class="alert alert-success dashboard-alert" style="text-align: center;">
+			  <button type="button" class="close" data-dismiss="alert">&times;</button>
+			  	<%=raw flash[:notification]%>
+			</div>
+		<% end %>
+		
+        <div id="banner">
+            <div id="banner-h1">
+                <h1>don&#39;t make a promise. make a goal.</h1>
+            </div>
+            
+            <% if @check_if_expired['status'] == -1  || @check_if_expired['status'].nil? %>
+	            <!-- <div id="start-btn"><a href="#setGoalModal" data-toggle="modal"><img src="/assets/new_style/img_dashboard/start-btn.png"></a></div> -->
+	            <div id="start-btn"><a href="#modal" data-toggle="modal"><img src="/assets/new_style/img_dashboard/start-btn.png"></a></div>
+	        <% else %>
+	        	<div id="dvGoalOption" class="dvGoalOption">
+			    	<a href="#emodal" class="btn btn-primary" data-toggle="modal">Edit Goal</a>
+			    	<a href="#deletGoalModal" class="btn btn-danger" data-toggle="modal">Delete Goal</a>
+			   	</div>
+	        <% end %>
+        </div><!-- end banner -->
+
+        <div id="summary-container">
+            <div id="summary-title" style="float: left;">activity summary</div>
+            <div id="summary" style="float: right; padding-top: 10px;">
+                <ul id="tabs">
+                    <li><a href="#dvActivities_1" id="bnt-Day">Today</a></li>
+                    <li><a href="#dvActivities_2" id="bnt-Week">Week</a></li>
+                    <li><a href="#dvActivities_3" id="bnt-Month">Month</a></li>
+                    <li><a href="#dvActivities_4" id="bnt-Year">Year</a></li>
+                </ul>
+            </div><!-- end summary -->
+            <div class="clear"></div>
+				<%= render :partial => "static/dashboard_tab" %>        
+            <div class="clear"></div>
+
+            <div id="total-badges">
+                <div style="float: left;"><strong><%= @dashboard[0]['badge'].count %> Badges earned</strong> <!-- earned today --></div>
+                <!-- <div style="float: right;"><a href="#setGoalModal" data-toggle="modal">Setup a goal to start earning badges</a></div> -->
+                <div class="clear"></div>
+            </div><!-- end total-badges -->
+
+            <div id="left-container">
+                <div id="leaderboard-title">
+                    top 5 leaderboard
+                </div>
+                <div id="full-btn">
+                    <a style="cursor:pointer">Full Leaderboard</a>
+                </div>
+                <div class="clear"></div>
+
+                <div id="leaderboard-list" class="topFiveLeaderboards">
+                    <ul>
+                    	<% @dashboard[0]['leaderboard'].first(5).each do |leaderboard| %>
+	                    	<% if leaderboard['player_name']['name'] == logged_user['name'] %> 	
+		                    	<li class="user">
+		                    <% else %>
+		                    	<li>
+		                    <% end %> 
+	                            <div class="rank"><%= leaderboard['rank'] %></div> 
+	                            <div class="name">
+	                            	<% if leaderboard['player_name']['uid'] == 'none' %>
+	                            		<img src="assets/common/dashboard/avatar-friends00.png" />
+	                            	<% else %>
+	                            		<img src="http://graph.facebook.com/<%= leaderboard['player_name']['uid']%>/picture?width=61&height=59" />
+	                                <% end %>
+	                                <% if leaderboard['player_name']['name'] == logged_user['name'] %> 	
+				                    	<!-- <a href="#" style="color:#292a2d;">YOU!</a> -->
+				                    	YOU!
+				                    <% else %>
+				                    	<!-- <a href="#"><%= leaderboard['player_name']['name'] %></a> -->
+				                    	<%= leaderboard['player_name']['name'] %>
+				                    <% end %>
+	                            </div>
+	                            <div class="points"><%= number_with_precision(leaderboard['points'].to_s.split('.')[0], :precision  => 0, :delimiter => ',') %></div>
+	                            <div class="clear"></div>
+	                        </li>
+                    	<% end %>
+                    </ul>
+                </div><!-- leaderboard-list -->
+                
+                 <div id="leaderboard-list" class="fullLeaderboards" style="display:none;">
+                    <ul>
+                    	<% @dashboard[0]['leaderboard'].each do |leaderboard| %>
+	                    	<% if leaderboard['player_name']['name'] == logged_user['name'] %> 	
+		                    	<li class="user">
+		                    <% else %>
+		                    	<li>
+		                    <% end %> 
+	                            <div class="rank"><%= leaderboard['rank'] %></div> 
+	                            <div class="name">
+	                            	<% if leaderboard['player_name']['uid'] == 'none' %>
+	                            		<img src="assets/common/dashboard/avatar-friends00.png" />
+	                            	<% else %>
+	                            		<img src="http://graph.facebook.com/<%= leaderboard['player_name']['uid']%>/picture?width=61&height=59" />
+	                                <% end %>
+	                                <% if leaderboard['player_name']['name'] == logged_user['name'] %> 	
+				                    	<!-- <a href="#" style="color:#292a2d;">YOU!</a> -->
+				                    	YOU!
+				                    <% else %>
+				                    	<!-- <a href="#"><%= leaderboard['player_name']['name'] %></a> -->
+				                    	<%= leaderboard['player_name']['name'] %>
+				                    <% end %> 
+	                            </div>
+	                            <div class="points"><%= number_with_precision(leaderboard['points'].to_s.split('.')[0], :precision  => 0, :delimiter => ',') %></div>
+	                            <div class="clear"></div>
+	                        </li>
+                    	<% end %>
+                    </ul>
+                </div><!-- leaderboard-list -->
+            </div><!-- end left-container -->
+        </div><!-- end left container -->
+    </div><!-- end left -->
+
+    <div id="right">
+        <div id="right-container">
+            <div class="user-name"><%= truncate(logged_user['name'], :length => 18) %></div>
+            <% @level.sort! { |a,b| a[:name] <=> b[:name] }.last(1).each do |current_level| %>
+				<div class="user-stats">you've reached <%= current_level[:name] %>!</div>
+			<% end %>
+            <div class="user-points"><%= number_with_precision(@dashboard[0]['points'], :precision => 0, :precision  => 0, :delimiter => ',') %><span style="font-size: 18px;">points</span></div> 
+        </div><!-- end right-container -->
+	
+		<% if session[:profile] ==  1 %>
+	        <div class="sep"></div>
+			
+	        <div id="right-container">
+	            <div id="edit-profile-container">
+	                <div class="title">GET STARTED</div> <div class="profile-progress"><span id="total_progress_precentage"><%= cookies[:total_progress_precentage] %></span>% Done</div>
+	                <div class="clear"></div>
+	                    <div class="progress">
+	                        <div class="bar" id="progress_bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: <%= cookies[:total_progress_precentage] %>%;">
+	                            &nbsp;
+	                        </div>
+	                    </div>
+						<div id="forHeight"></div>
+						<div id="forWeight"></div>
+						<div id="forDistance"></div>
+						<div id="forLocation"></div>
+	                    <!-- <a href="#"><div class="edit" id="btnUpdateHeight">Tell us  your height<span style="float: right;">+</span></div><div class="clear"></div></a> -->
+	                    <!-- <a href="#"><div class="edit" id="btnUpdateWeight">Tell us your weight <span style="float: right;">+</span></div><div class="clear"></div></a> -->
+	                    <!-- <a href="#"><div class="edit" id="btnUpdateDistance">Choose Distance Unit<span style="float: right;">+</span></div><div class="clear"></div></a> -->
+	                    <!-- <a href="#"><div class="edit" id="btnUpdateLocation" style="border: none;">Update your location<span style="float: right;">+</span></div><div class="clear"></div></a> -->
+	                    
+	            </div><!-- end edit-profile-container -->
+	        </div><!-- end right-container -->
+        <% end %>
+
+        <div class="sep"></div>
+
+        <div id="right-container">
+            <div id="achievements-container">
+                <div class="title">ACHIEVEMENTS</div> <div class="achievement-counter"></div>
+                <div class="clear"></div>
+                <div id="badges-container">
+                	<% @dashboard[0]['badge'].sort! {|a,b| a['created_at'] <=> b['created_at']}.first(4).each do |badge|%>
+                    <div id="badge">
+                        <img src="<%= badge['image'] %>" style="width:44px; height:41px">
+                        <h4 style="line-height:20px;"><%= badge['name'] %></h4> 
+                        <!-- <p>Level Up Badge</p> -->
+                        <div class="clear"></div>
+                    </div>
+					<% end %>
+                    <!-- <div id="badge">
+                        <img src="/assets/new_style/img_dashboard/badge.png">
+                        <h4>Register</h4> 
+                        <p>New Journey Badge</p>
+                        <div class="clear"></div>
+                    </div> -->
+                    <div id="badge" style="border: none; text-align: center;">
+                        <a href="/badges">See all badges</a>
+                    </div>
+                </div><!-- end badges-container -->
+                
+            </div>
+        </div><!-- end right-container -->
+
+        <div class="sep"></div>
+
+        <div id="right-container">
+            <div id="recent-activity-container">
+                <div class="title">RECENT ACTIVITY</div>
+	                <% @dashboard[0]['recent_activity'].each do |ra| %>
+	                	<div id="activity">
+	                        <div class="recent-activity">
+	                        	<% if ra['player_name']['uid'] == 'none' %>
+                            		<img src="assets/common/dashboard/recent-activities-avatar.png" />
+                            	<% else %>
+                            		<img src="http://graph.facebook.com/<%= ra['player_name']['uid']%>/picture?width=36&height=36" />
+                                <% end %>
+                                
+	                            <p><strong><%= ra['player_name']['name'].split(' ')[0] %></strong> unlocked the <strong><%= ra['name'] %></strong> badge!<br>
+	                            <span class="time"><%= ra['created_at']%></span></p>
+	                        </div>
+	                        <div class="clear"></div>
+	                    </div><!-- end activity -->
+	                <% end %>
+
+                    <!-- <div id="activity">
+                        <div class="recent-activity">
+                            <img src="/assets/new_style/img_dashboard/friend.png">
+                            <p><strong>Natalie</strong> unlocked the <strong>"First Workout"</strong> badge!<br>
+                            <span class="time">9 minutes ago</span></p>
+                        </div>
+                        <div class="clear"></div>
+                    </div> --><!-- end activity -->
+                    
+            </div><!-- end recent-acivity-container -->
+        </div><!-- end right-container -->
+
+    </div><!-- end right -->
+    <div class="clear"></div>
+
+</div>
+
+<div id="setGoalModal" style="width: 458px!important;margin-left: -220px;top: 5%!important;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Set your Daily Goals</h3>
+  </div>
+  <div class="modal-body"> 
+  	<form action="/save_goals" id="frm_goals" method="post">
+		<div style="margin:0 auto;width:85%;">
+			<div><label for="GoalDesc">Description</label></div>
+			<div><input class="form_text_input" type="text" id="GoalDesc" name="goal[description]" /></div>
+
+			<div><label for="GoalCal">Target Calories</label></div>
+			<div><input class="form_text_input" type="text" id="GoalCal" name="goal[calories]" /></div>
+
+			<div><label for="GoalDistance">Target Distance (km)</label></div>
+			<div><input class="form_text_input" type="text" id="GoalDistance" name="goal[distance]" /></div>
+			<div><label for="GoalSteps">Target Steps</label></div>
+			<div><input class="form_text_input" type="text" id="GoalSteps" name="goal[steps]"/></div>
+
+			<div><label for="GoalSExpires">Goals expires at (XXXX-XX-XX)</label></div>
+			<div><input class="form_text_input" type="text" id="GoalSExpires" name="goal[expires]" /></div>
+		</div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="btnGoalSave">Save Goals</button>
+  </div>
+</div>
+
+<div id="modal" class="hide fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="modal-container">
+
+        <a href="#" data-dismiss="modal" aria-hidden="true"><div id="modal-close"></div></a>
+        <img src="http://graph.facebook.com/<%= logged_user['uid']%>/picture?type=square">
+        <h1>CREATE A NEW GOAL</h1>
+        <p>Goals help you stay focused while earning new badges!</p>
+        <div class="sep"></div>
+        
+        <div id="errMsg" class="alert alert-block alert-error fade in" style="display:none;"></div>
+        
+		<form action="/save_goals" id="frm_new_goals" method="post">
+	        <input type="text" class="goal-name" id="goalName" name="goal[description]" placeholder="Name Your Goal">
+	
+	        <div id="goal-container">
+	            <label for="calories-burned"><p>Calories<br> Burned</p> 
+	                <input type="text" id="calories-burned" name="goal[calories]" class="goal-txt" value="1">
+	                    <input type="text" id="calorie-slider" value="" data-slider-min="1" data-slider-max="1000" data-slider-step="1" data-slider-value="1" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide">
+	            </label>
+	        </div><!-- end calories-burned -->
+	
+	        <div id="goal-container" style="margin: 0 15px 0 15px;">
+	            <label for="miles-traveled"><p>Miles<br> Traveled</p> 
+	                <input id="miles-traveled" name="goal[distance]" class="goal-txt" value="1">
+	                <input type="text" id="miles-slider" value="" data-slider-min="1" data-slider-max="10000" data-slider-step="1" data-slider-value="1" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide">
+	            </label>
+	        </div><!-- end miles-traveled -->
+	
+	        <div id="goal-container">
+	            <label for="steps-taken"><p>Steps<br> Taken</p> 
+	                <input id="steps-taken" name="goal[steps]" class="goal-txt" value="1">
+	                <input type="text" id="steps-slider" value="" data-slider-min="1" data-slider-max="9999" data-slider-step="1" data-slider-value="1" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide">
+	            </label>
+	        </div><!-- end steps-taken -->
+	
+	
+	            <div class="modal-datepicker">Complete goal by<input type="text" name="goal[expires]" id="goalExpiration" class="myDatepicker" placeholder="yyyy-mm-dd"></div>
+	
+	
+	        <div style="margin: auto; width: 233px;">
+	            <input type="button" id="btnSaveNewGoal" value="" class="create-goal">
+	        </div>
+		</form>
+    </div> <!-- end modal-container -->
+</div> <!-- end modal -->
+
+<% unless @get_goal_info.nil? %>
+<script>
+	$(document).ready(function(){
+		$("#ecalorie-slider").slider().on("slide", function(ev){
+	        $('#ecalories-burned').val(ev.value);
+	    });
+	
+	    $("#emiles-slider").slider().on("slide", function(ev){
+	        $('#emiles-traveled').val(ev.value);
+	    });
+	
+	    $("#esteps-slider").slider().on("slide", function(ev){
+	        $("#esteps-taken").val(ev.value);
+	    });
+	});	
+</script>
+
+<div id="emodal" class="hide fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="modal-container">
+
+        <a href="#" data-dismiss="modal" aria-hidden="true"><div id="modal-close"></div></a>
+        <img src="http://graph.facebook.com/<%= logged_user['uid']%>/picture?type=square">
+        <h1>EDIT YOUR GOAL</h1>
+        <p>Goals help you stay focused while earning new badges!</p>
+        <div class="sep"></div>
+        
+        <div id="EditerrMsg" class="alert alert-block alert-error fade in" style="display:none;"></div>
+        
+		<form action="/save_edit_goals" id="frm_edit_goals" method="post">
+	        <input type="text" class="goal-name" id="egoalName" name="egoal[description]" placeholder="Name Your Goal" value="<%= @get_goal_info['description']%>">
+	
+	        <div id="goal-container">
+	            <label for="calories-burned"><p>Calories<br> Burned</p>
+	                <input type="text" id="ecalories-burned" name="egoal[calories]" class="goal-txt" value="<%= @get_goal_info['calories']%>">
+                    <input type="text" id="ecalorie-slider" value="" data-slider-min="1" data-slider-max="1000" data-slider-step="1" data-slider-value="1" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide">
+	            </label>
+	        </div><!-- end calories-burned -->
+	
+	        <div id="goal-container" style="margin: 0 15px 0 15px;">
+	            <label for="miles-traveled"><p>Miles<br> Traveled</p> 
+	                <input type="text" id="emiles-traveled" name="egoal[distance]" class="goal-txt" value="<%= @get_goal_info['kilometers']%>">
+	                <input type="text" id="emiles-slider" value="" data-slider-min="1" data-slider-max="10000" data-slider-step="1" data-slider-value="1" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide">
+	            </label>
+	        </div><!-- end miles-traveled -->
+	
+	        <div id="goal-container">
+	            <label for="steps-taken"><p>Steps<br> Taken</p> 
+	                <input type="text" id="esteps-taken" name="egoal[steps]" class="goal-txt" value="<%= @get_goal_info['steps']%>">
+	                <input type="text" id="esteps-slider" value="" data-slider-min="1" data-slider-max="9999" data-slider-step="1" data-slider-value="1" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide">
+	            </label>
+	        </div><!-- end steps-taken -->
+	
+	
+	            <div class="modal-datepicker">Complete goal by<input type="text" name="egoal[expires]" id="egoalExpiration" class="myDatepicker" placeholder="yyyy-mm-dd" value="<%= @get_goal_info['expires_at']%>"></div>
+	
+	
+	        <div style="margin: auto; width: 233px;">
+	            <input type="button" id="btnGoalSaveEdit" value="" class="create-goal">
+	        </div>
+		</form>
+    </div> <!-- end modal-container -->
+</div> <!-- end modal -->
+
+
+	<div id="deletGoalModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Delete Goal Confirmation</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p style="font-size: 20px;">Are you sure you want to delete your goal?</p>
+	  </div>
+	  <div class="modal-footer">
+	    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+	    <a href="#" class="btn btn-primary" id="btnGoalDel">Yes</a>
+	  </div>
+	</div>
+	<input type="hidden" id="goal_id" value="<%= @get_goal_info['id']%>">
+<% end %>

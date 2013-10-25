@@ -1,0 +1,43 @@
+/*  Data Table Styles  */
+
+
+
+/*  Data table 01  */
+#data-table {
+	display: none;
+}
+.bar span {
+	background: #fefefe url(../graphs/info-bg.gif) 0 100% repeat-x;
+}
+.fig0 {
+	background: #bcbcbc url(../graphs/bar-01-bg.gif) 0 0 repeat-y;
+}
+.fig1 {
+	background: #ffb11c url(../graphs/bar-02-bg.gif) 0 0 repeat-y;
+}
+.fig2 {
+	background: #35cdde url(../graphs/bar-03-bg.gif) 0 0 repeat-y;
+}
+
+
+
+/*  Data table 02  */
+
+/*
+#data-table02 {
+	display: none;
+}
+.bar span {
+	background: #fefefe url(../images/info-bg.gif) 0 100% repeat-x;
+}
+.fig0 {
+	background: #747474 url(../images/bar-01-bg.gif) 0 0 repeat-y;
+}
+.fig1 {
+	background: #65c2e8 url(../images/bar-02-bg.gif) 0 0 repeat-y;
+}
+.fig2 {
+	background: #eea151 url(../images/bar-03-bg.gif) 0 0 repeat-y;
+}
+
+*/

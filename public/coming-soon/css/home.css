@@ -1,0 +1,46 @@
+#btn-LoginFb { width:120px; height:27px; background: blue; margin-left:10px; float:left; background: url('/assets/common/btn-fb-login.png') top center; cursor: pointer; }
+#btn-LoginFb:hover { background: url('/assets/common/btn-fb-login.png') bottom center; }
+.for_btnFB { width:auto!important; background:none!important;-webkit-transition:none!important;}
+.for_logo { width:auto!important; background:none!important;-webkit-transition:none!important; float:left!important; margin-top:0!important;}
+
+/* For Watch Images */
+.imgWatch_black { width:95px; height: 155px; background: url("/assets/home/builder/sprite_watches.png") no-repeat; background-position: -108px 0; } 
+.imgWatch_white { width:95px; height: 155px; background: url("/assets/home/builder/sprite_watches.png") no-repeat; background-position: -12px 0; } 
+.imgWatch_pink { width:95px; height: 155px; background: url("/assets/home/builder/sprite_watches.png") no-repeat; background-position: -400px 0; } 
+.imgWatch_blue { width:95px; height: 155px; background: url("/assets/home/builder/sprite_watches.png") no-repeat; background-position: -297px 0; }
+.imgWatch_lime { width:95px; height: 155px; background: url("/assets/home/builder/sprite_watches.png") no-repeat; background-position: -202px 0; } 
+
+/* For Watch Color */
+.color-black { background: #292a2d; }
+.color-white { background: #f3f1f3; }
+.color-pink { background: #ec45b7; }
+.color-blue { background: #00bcf2; }
+.color-green { background: #b7da02; }
+
+/* For Gender */
+.btnGender { text-align:center; }
+.dvMale_active { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: -46px -135px; margin: 0 auto; }
+.dvMale_idle { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: 0 -135px; margin: 0 auto; }
+.dvFemale_active { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: -46px -180px; margin: 0 auto;}
+.dvFemale_idle { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: 0 -180px; margin: 0 auto;}
+
+/* For Meteor Style */
+.dvWristWatch_active { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: -46px 0; margin: 0 auto;}
+.dvWristWatch_idle { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: 0 0; margin: 0 auto;}
+.dvClipWatch_active { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: -46px -46px; margin: 0 auto;}
+.dvClipWatch_idle { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: 0 -46px; margin: 0 auto;}
+.dvNecklaceWatch_active { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: -46px -92px; margin: 0 auto;}
+.dvNecklaceWatch_idle { width: 50px; height: 50px; background: url("/assets/home/builder-sprite.png") 0 0 no-repeat; background-position: 0 -92px; margin: 0 auto;}
+
+input:focus{ outline: 0; }
+.line_arrow { width: 179px; height:22px; background: url("/assets/home/builder-horizontal-line.png") 0 0 no-repeat; float:right; margin-top:50px; }
+.slidejs-1, .slidejs-2, .slidejs-3, .slidejs-4, .slidejs-5 { }
+.watch-overlay{ background: url('/assets/home/watch_face/watch-overlay.png'); width: 89px; height: 101px; position:absolute; top:0; left:0; z-index: 999; }	
+.watch-overlay-big{ background: url('/assets/home/watch_face/watch-overlay-big.png'); width: 112px; height: 125px; position:absolute; top:0; left:0; z-index: 999; }
+.ulvoice { font-size: 15px; color: #fff; }
+#btnSendPreOrder { width: 170px; height: 40px; background-color: #0aa8dc; -webkit-border-radius: 30px; -moz-border-radius: 30px; border-radius: 30px; background-color: #0aa8dc; border-style: none; color: #fff; }
+.mdl-close { margin-top: 2px; float: right; cursor: pointer; }
+#myModalLabel { font-family: "LeagueGothic","Helvetica Neue","Helvetica","Arial"; font-size: 18px; }
+.modal-footer { padding: 14px 190px 15px; }
+.btnColor { cursor: pointer; padding: 25px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.current_color { text-align: center; }

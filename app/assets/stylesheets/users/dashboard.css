@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/*Dashboard Page's Tab and Page Content Styles*/
+
+#dvMainContent ul { list-style: none; padding:0; margin:0; }
+#dvMainContent li { width:450px; height:auto; overflow: visible; background: #f5f5f5; border:5px solid #e4e4e4; margin:0 0 30px 5px; !important; padding:0; float:left; position:relative; vertical-align:top; }
+
+
+#dvMainContent li:first-child { margin-right:26px; }
+#dvMainContent li:nth-child(4) { margin-right:26px; }
+
+
+#dvDashbrd-summary-title { width: auto; height: 50px; background: url('../users/dashboard/bg-tab-summary.png') no-repeat top left; position: relative; top:10px; left:-10px; margin-bottom: 20px; } 
+
+#dvDashbrd-leaderboard-title { width: auto; height: 50px; background: url('../users/dashboard/bg-tab-leaderboard.png') no-repeat top left; position: relative; top:10px; left:-10px; margin-bottom: 20px; }
+
+#dvDashbrd-comments-title { width: auto; height: 50px; background: url('../users/dashboard/bg-tab-comments.png') no-repeat top left; position: relative; top:10px; left:-10px; margin-bottom: 20px; }
+
+#dvDashbrd-groups-title { width: auto; height: 50px; background: url('../users/dashboard/bg-tab-groups.png') no-repeat top left; position: relative; top:10px; left:-10px; margin-bottom: 20px; }
+
+#dvDashbrd-sports-title { width: auto; height: 50px; background: url('../users/dashboard/bg-tab-sports.png') no-repeat top left; position: relative; top:10px; left:-10px; margin-bottom: 20px; }
+
+
+#dvDashbrd-summary-title h3,
+#dvDashbrd-leaderboard-title h3,
+#dvDashbrd-comments-title h3,
+#dvDashbrd-groups-title h3,
+#dvDashbrd-sports-title h3 { padding: 8px 0 0 50px; margin:0; font-family: 'Exo', Arial, Helvetica, Sans-serif; font-size:1.3em; color:#fff; font-weight:600; font-style: italic; letter-spacing: .1em; }
+
+
+#dvSummary-content,
+#dvLeaderboard-content,
+#dvComments-content,
+#dvGroups-content,
+#dvSports-content { width:430px; height: auto; margin:-5px auto; overflow: auto; }
+
+
+/* Summary of Activity Contents */
+#dvSummary-content table { width:100%; padding-left:10px; margin-top:5px; }
+#dvSummary-content span { font-family: Arial, Helvetica, Sans-serif; font-size: 10px; font-weight: bold; color:#999;}
+#dvSummary-content td { font-family: 'Exo', Arial, Helvetica, Sans-serif; font-size:26px; font-weight:600; color:#555; border-right: 1px solid #e4e4e4; padding: 0 10px 8px 10px; }
+	.active-time { font-size:20px !important; color:#ff6c00 !important; border-right:none !important; }
+	
+	
+/* Leaderboard Contents */
+#dvLeaderboard-content table { width:100%; background: #fff; padding:0; margin-bottom:20px; border-collapse: collapse; color:#777; }
+#dvLeaderboard-content thead { background: #63b208; font-family: 'Exo', Arial, Helvetica, Sans-serif; Font-size:16px; color: #fff; font-weight:light; }
+#dvLeaderboard-content td, #dvLeaderboard-content th { padding:8px 0 7px 10px; border: 1px solid #e4e4e4; text-align: left; }
+#dvLeaderboard-content tr:hover { color:#444; background: #e4e4e4; }
+	
+#leaderboard-bottom { width:100%; height:auto; overflow:auto; margin-bottom:20px; } 
+	#view-all { font-weight:bold; text-shadow: 0 1px 0 rgba(255,255,255,255); margin:0 10px 0 10px; }
+	#leaderboard-bottom  a	{ text-decoration: none; cursor:pointer; color:#777; }
+	#leaderboard-bottom  a:hover	{ text-decoration: none; cursor:pointer; color:#555; }
+	
+/* Recent Comments Contents */
+textarea { width:408px; max-width:408px; height:80px; max-height:80px; border: 1px solid #bcbcbc; font-family:Arial, Helvetica, Sans-serif; font-size: 13px; color:#555; padding:10px; }
+	textarea:focus { outline:none; }
+	.post-comment { width:127px; height:32px; margin: 15px auto; }
+#dvComment-area { width:410px; margin:0 0 25px 0; padding:10px; height:300px; color:#777; overflow:auto; overflow-x:hidden; }
+	.user-comments { margin-bottom:20px; border-bottom:1px dotted #ccc; }
+	.user-comments h4 { margin:0; font-size: 1.1em; line-height:.5em; color:#555; }
+	
+	
+/* Groups/Teams Contents */
+#btnJoin { width:238px; height:88px; background:url('../users/dashboard/join-a-team.png') no-repeat top center; margin:20px 20px 20px 0; padding-right:40px; border-right:1px solid #e4e4e4; }
+#btnJoin:hover { background:url('../users/dashboard/join-a-team.png') no-repeat bottom center; }
+
+#dvGroups-content h4 { font-size: 1.2em; color:#777; margin:0 0 5px 0; }
+
+/* Sports Contents */
+#dvSports-content h1 { font-family: 'Exo', Arial, Helvetica, Sans-serif; Font-size:3em; color: #555; font-weight:600;  margin: -5px 0 0 10px; padding:0; float:left;  }
+#dvSports-content img { float:left; }
+#dvSport-selected { width:200px; height: 50px; margin:10px auto; }
+	#dvSports-content table { width:400px; border-top:1px solid #e4e4e4; border-collapse:collapse; text-align:center; margin:0 auto; margin-bottom:30px; text-align: center; }
+	#dvSports-content td { height: 40px; width:140px; border-right:1px solid #e4e4e4; 
+	font-family:'Exo', Arial, Helvetica, Sans-serif; font-size:1.4em; color:#777; padding:8px 18px 10px 18px;  } 
+	#dvSports-content td:last-child { border-right:none; }
+	#dvSports-content td:hover a { background:#fcfcfc;  padding:8px 20px 10px 20px; }
+	#dvSports-content a { text-decoration:none; color:#777; text-shadow: 0 1px 0 #fff;  padding:8px 20px 10px 20px; }
+	#dvSports-content a:hover { text-decoration:none; color:#555; text-shadow: 0 1px 0 #fff; }
+
+	
+	
+	

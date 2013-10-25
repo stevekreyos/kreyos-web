@@ -1,0 +1,9 @@
+.dv_badge { text-align: center; float: left; padding-left: 11px; }
+.badge_icon_title { float:left; float:left; margin: 5px; }
+.badge_icon { float:left; }
+.badge_header { padding: 5px; margin-left: 10px; }
+.view_all_button { float:right; width:160px; height:34px; background: url('../../assets/common/badge/Kreyos-badges-viewall-button.png') no-repeat top center; cursor:pointer;}
+.view_all_button:hover { background: url('../../assets/common/badge/Kreyos-badges-viewall-button.png') no-repeat bottom center }
+#dvTab-Content-wrap { padding-bottom: 30px; width:958px; height: auto; overflow:auto; margin:0 auto 50px auto; border:1px solid #ccc; border-radius:5px; }
+#dvActivities-menu-960 { height:50px; background:#ddd url('../../assets/common/dashboard/activityTab-bg.png') repeat-x top left; padding:5px; }
+#tabs_content_container { padding: 25px; width: auto; }

@@ -1,0 +1,143 @@
+<script>
+ $(function(){
+ 	
+ 	
+    	// calories
+	        $('#dv-graph-calories').highcharts({
+	            chart: {
+	                type: 'column',
+	                width: 658
+	            },
+	            title: {
+	                text: 'Daily Calories Burned'
+	            },
+	            xAxis: {
+	                categories: [
+                		<% @dashboard[0]['daily_activity'][0]['chart_values'][0]['calories'].each do |value| %>
+	                    	'<%= value['label'] %>',
+                		<% end %>
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Calories'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px; margin-left: 40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.2f} calories</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Steps',
+	                data: [
+	                		<% @dashboard[0]['daily_activity'][0]['chart_values'][0]['calories'].each do |value| %>
+		                    	<%= value['value'] %>,
+	                		<% end %>
+	                      ]
+	            }]
+	        });
+	        
+    	// steps
+	        $('#dv-graph-steps').highcharts({
+	            chart: {
+	                type: 'column',
+	                width: 658
+	            },
+	            title: {
+	                text: 'Daily Steps Taken'
+	            },
+	            xAxis: {
+	                categories: [
+                		<% @dashboard[0]['daily_activity'][0]['chart_values'][0]['steps'].each do |value| %>
+	                    	'<%= value['hour'] %>',
+                		<% end %>
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Steps Taken'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px; margin-left: 40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.2f} Steps</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Steps',
+	                data: [
+	                		<% @dashboard[0]['daily_activity'][0]['chart_values'][0]['steps'].each do |value| %>
+		                    	<%= value['value'] %>,
+	                		<% end %>
+	                      ]
+	            }]
+	        });
+	        
+    	// kilometers
+	        $('#dv-graph-kilometers').highcharts({
+	            chart: {
+	                type: 'column',
+	                width: 658
+	            },
+	            title: {
+	                text: 'Daily Kilometers Traveled'
+	            },
+	            xAxis: {
+	                categories: [
+                		<% @dashboard[0]['daily_activity'][0]['chart_values'][0]['km'].each do |value| %>
+	                    	'<%= value['hour'] %>',
+                		<% end %>
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Km Traveled'
+	                }
+	            },
+	            tooltip: {
+	                headerFormat: '<span style="font-size:15px; margin-left: 40%;"><strong>{point.key}</strong></span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.2f} km</b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.4, //0.2
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: 'Kilometers',
+	                data: [
+	                		<% @dashboard[0]['daily_activity'][0]['chart_values'][0]['km'].each do |value| %>
+		                    	<%= value['value'] %>,
+	                		<% end %>
+	                      ]
+	            }]
+	        });
+    });
+</script>

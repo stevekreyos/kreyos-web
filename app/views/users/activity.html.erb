@@ -1,0 +1,236 @@
+<% content_for :subtitle do %>
+	Activities
+<%end%>
+
+<% content_for :include_css do %>
+	<%= stylesheet_link_tag "new_style/activity-kreyos.css" %>
+	<!-- <style>
+		.highcharts-container { width: 720px!important; }
+	</style> -->
+<% end %>
+
+<% content_for :include_js do %>
+  	<%= javascript_include_tag "highcharts/highcharts" %>
+<% end %>
+
+<script>
+    $(document).ready(function() {
+        $(".tab_content").hide();
+        $("ul.tabs li:first").addClass("active").show();
+        $(".tab_content:first").show();
+
+        $("ul.tabs li").click(function() {
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+            $(".tab_content").hide();
+            var activeTab = $(this).find("a").attr("href");
+            $(activeTab).show();
+            return false;
+        });
+    });
+</script>
+
+<%= render :partial => "static/activity_graphs" %>
+        
+<div id="activity-container" style="margin: 90px auto;">
+
+	<div id="left">
+	    <div id="left-container">
+	        <div id="stats-buttons">
+	            <ul class="tabs">
+	                <li><a href="#leaderboard"><div class="leaders-btn"></div></a></li>
+	                <!-- <li><a href="#stats"><div class="mystats-btn"></div></a></li> -->
+	                <li><div class="category-title">CATEGORY</div></li>
+	                <!-- <li><a href="#"><div class="points-btn"></div></a></li> -->
+	                <li><a href="#dv-graph-calories"><div class="calories-btn"></div></a></li>
+	                <li><a href="#dv-graph-km"><div class="km-btn"></div></a></li>
+	                <li><a href="#dv-graph-steps"><div class="steps-btn"></div></a></li>
+	            </ul>
+	        </div><!-- end stats-buttons -->
+	
+	        <div id="stats-container">
+	
+	            <!-- LEADERBOARD -->
+	
+	            <div id="leaderboard" class="tab_content">
+	                <div style="float: left;"><h3>LEADERBOARD - POINTS</h3></div>
+	                    
+	                    <div id="sort">
+	                    <div class="dropdown">
+	                        <div data-toggle="dropdown">Today</div>
+	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                            <li><a tabindex="-1" href="#">Week</a></li>
+	                            <li><a tabindex="-1" href="#">Month</a></li>
+	                            <li><a tabindex="-1" href="#">Year</a></li>
+	                        </ul>
+	                    </div> <!-- end dropdown -->
+	                </div><!-- end sort -->
+	
+	                <div class="clear"></div>
+	                <div class="title-sep"></div>
+	
+	                <div id="leaderboard-list">
+	                    <ul>
+	                       <% @data[0]['leaderboard'].each do |leaderboard| %>
+		                    	<% if leaderboard['player_name']['name'] == logged_user['name'] %> 	
+			                    	<li class="user">
+			                    <% else %>
+			                    	<li>
+			                    <% end %> 
+		                            <div class="rank"><%= leaderboard['rank'] %></div> 
+		                            <div class="name">
+		                            	<% if leaderboard['player_name']['uid'] == 'none' %>
+		                            		<img src="assets/common/dashboard/avatar-friends00.png" />
+		                            	<% else %>
+		                            		<img src="http://graph.facebook.com/<%= leaderboard['player_name']['uid']%>/picture?width=61&height=59" />
+		                                <% end %>
+		                                <% if leaderboard['player_name']['name'] == logged_user['name'] %> 	
+					                    	<!-- <a href="#" style="color:#292a2d;">YOU!</a> -->YOU!
+					                    <% else %>
+					                    	<!-- <a href="#"><%= leaderboard['player_name']['name'] %></a> -->
+					                    	<%= leaderboard['player_name']['name'] %>
+					                    <% end %>
+		                            </div>
+		                            <div class="points"><%= number_with_precision(leaderboard['points'].to_s.split('.')[0], :precision  => 0, :delimiter => ',') %></div>
+		                            <div class="clear"></div>
+		                        </li>
+	                    	<% end %>
+	                    </ul>
+	
+	                    <div style="margin-top: 35px;">
+	                        <!-- <a href="#"><div class="invite-btn">Invite Friends</div></a> -->
+	
+	                        <!-- <div style="float: right;">
+	                            <div class="pagination">
+	                                <ul class="pagination">
+	                                    <li><a href="#">1 - 10</a></li>
+	                                    <li><a href="#">11 - 20</a></li>
+	                                    <li><a href="#">21 - 30</a></li>
+	                                </ul>
+	                            </div>
+	                        </div> --><!-- end pagination -->
+	
+	                        <div class="clear"></div>
+	                    </div>
+	
+	                </div><!-- leaderboard-list -->
+	            </div><!-- end leaderboard -->
+	
+	            <!-- END LEADERBOARD -->
+	
+	            <!-- MY STATS -->
+	
+	            <div id="stats" class="tab_content">
+	                <div style="float: left;">
+	                    <h3>MY STATS: CALORIES</h3>
+	                    <div class="current">Current</div> 
+	                    <div class="goal">Goal</div>
+	                    <div class="clear"></div>
+	                </div>
+	                    
+	                <div id="sort">
+	                    <div class="dropdown">
+	                        <div data-toggle="dropdown">7 Days</div>
+	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                            <li><a tabindex="-1" href="#">7 Weeks</a></li>
+	                            <li><a tabindex="-1" href="#">7 Months</a></li>
+	                            <li><a tabindex="-1" href="#">7 Years</a></li>
+	                        </ul>
+	                    </div> <!-- end dropdown -->
+	                </div><!-- end sort -->
+	
+	                <div class="clear"></div>
+	                <div class="title-sep"></div>
+	
+	                <div id="stats-box">&nbsp;</div><!-- end stats-box -->
+	
+	                <div id="breakdown">
+	                    <h4>DAY BREAKDOWN</h4>
+	                        <ul>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                            <li><div class="date-breakdown">july 2, 2013</div> <div class="cal-breakdown">104</div><div class="clear"></div></li>
+	                        </ul>
+	                </div><!-- end breakdown -->
+	
+	                <div id="average">
+	                    <h4>DAILY AVERAGE</h4>
+	                        
+	                </div><!-- end average -->
+	                <div class="clear"></div>
+	
+	            </div> <!-- end stats -->
+	
+	            <!-- END MY STATS -->
+			
+	        </div><!-- end stats-container -->
+	        
+	        <div id="dv-graph-calories" class="tab_content">
+				<div id="graph-cal" style="float:left;width: 750px; height:800px;"></div>
+			</div>
+			
+			<div id="dv-graph-km" class="tab_content">
+				<div id="graph-km" style="float:left; width: 750px; height:800px;"></div>
+			</div>
+			
+			<div id="dv-graph-steps" class="tab_content">
+				<div id="graph-steps" style="float:left; width: 750px; height:800px;"></div>
+			</div>
+			
+	        <div class="clear"></div>
+	
+	    </div><!-- end left container -->
+	</div><!-- end left -->
+	
+	<div id="right">
+	    <div id="right-container">
+	        <div class="user-name"><%= truncate(logged_user['name'], :length => 18) %></div>
+	        <% @level.sort! { |a,b| a[:name] <=> b[:name] }.last(1).each do |current_level| %>
+				<div class="user-stats">you've reached <%= current_level[:name] %>!</div>
+			<% end %>
+	        <div class="user-points"><%= @data[0]['points'].to_i %><span style="font-size: 18px;">points</span></div> 
+	    </div><!-- end right-container -->
+	
+	    <!-- <div class="sep"></div>
+	
+	    <div id="right-container">
+	        <div id="edit-profile-container">
+	            <div class="title">GET STARTED</div> <div class="profile-progress">20% Done</div>
+	            <div class="clear"></div>
+	                <div class="progress">
+	                    <div class="bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">&nbsp;</div>
+	                </div>
+	                <a href="#"><div class="edit">Update your name <span style="float: right;">+</span></div><div class="clear"></div></a>
+	                <a href="#"><div class="edit">Tell us your Birthday <span style="float: right;">+</span></div><div class="clear"></div></a>
+	                <a href="#"><div class="edit">Update your location <span style="float: right;">+</span></div><div class="clear"></div></a>
+	                <a href="#"><div class="edit" style="border: none;">Upload your photo <span style="float: right;">+</span></div><div class="clear"></div></a>
+	        </div>
+	    </div> -->
+	
+	    <div class="sep"></div>
+	
+	    <div id="right-container">
+	        <div id="achievements-container">
+	            <div class="title">ACHIEVEMENTS</div> <!-- <div class="achievement-counter">2</div> -->
+	            <div class="clear"></div>
+	            <div id="badges-container">
+	                <% @data[0]['badge'].sort! {|a,b| a['created_at'] <=> b['created_at']}.first(4).each do |badge|%>
+	                    <div id="badge">
+	                        <img src="<%= badge['image'] %>" style="width:44px; height:41px">
+	                        <h4 style="line-height: 20px;"><%= badge['name'] %></h4> 
+	                        <!-- <p>Level Up Badge</p> -->
+	                        <div class="clear"></div>
+	                    </div>
+					<% end %>
+	            </div><!-- end badges-container -->
+	            
+	        </div>
+	    </div><!-- end right-container -->
+	</div><!-- end right -->
+	<div class="clear"></div>
+	
+</div><!-- end container -->

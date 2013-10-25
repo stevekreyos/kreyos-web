@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Password Protected Area"
+AuthUserFile /applications/projects/kreyos_frontend/web/.htpasswd
+Require valid-user

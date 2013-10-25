@@ -1,0 +1,151 @@
+ @font-face {
+  font-family: 'proximanovalight';
+  src: url("fonts/proximanovalight.ttf");
+  font-weight:lighter;
+  font-style:normal; }
+
+
+#about{
+  width:175px;
+  height:175px;
+  margin:50px 20px 0 20px;
+  vertical-align: middle;
+  -moz-border-radius: 200px;
+  border-radius: 200px;
+  -webkit-border-radius: 200px;
+  border:1px solid #d7e1e1;
+  display: inline-block;
+}
+
+#about:hover{
+  -moz-box-shadow: 0 0 5px #d0d0d0;
+  -webkit-box-shadow: 0 0 5px #d0d0d0;
+  box-shadow: 0 0 5px #d0d0d0;
+  transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s; }
+
+.about-text{
+  font-family: "league_gothicregular", sans-serif;
+  padding-top:70px; 
+  font-size: 19px;
+  text-transform: uppercase;
+  line-height: 25px;
+  }
+ 
+ 
+ #who {
+  padding-top: 200px;
+  padding-bottom: 200px;
+  text-align: center; }
+  #who .container {
+    position: relative; }
+  #who h3 {
+    font-family: "league_gothicregular", sans-serif;
+    text-transform: uppercase;
+    color: #292a2d;
+    text-align: center;
+    font-size: 60px;
+    font-weight: normal;
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 600; }
+  #who p{ font-family: proximanovalight, century gothic, arial, sans-serif; font-size: 40px; line-height: 50px; color: #a0b0b4; }
+
+
+ #skilled {
+  background: #28c1f9;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  text-align: center; }
+  #skilled .container {
+    position: relative; }
+  #skilled h3 {
+    font-family: "league_gothicregular", sans-serif;
+    text-transform: uppercase;
+    color: #292a2d;
+    text-align: center;
+    font-size: 60px;
+    font-weight: normal;
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 600; }
+  #skilled p{ font-family: proximanovalight, century gothic, arial, sans-serif; font-size: 40px; line-height: 50px; color:#ffffff; }
+
+
+  #aroundtheworld {
+  background: #1b1d1d url('../images/section3-bg.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 200px;
+  padding-bottom: 150px;
+  text-align: center; }
+  #aroundtheworld .container {
+    position: relative; }
+  #aroundtheworld h3 {
+    font-family: "league_gothicregular", sans-serif;
+    text-transform: uppercase;
+    color: #292a2d;
+    text-align: center;
+    line-height: 50px;
+    font-size: 60px;
+    font-weight: normal;
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 600; }
+  #aroundtheworld p{ font-family: proximanovalight, century gothic, arial, sans-serif; font-size: 40px; line-height: 50px; padding-bottom: 50px; color:#ffffff; }
+  #aroundtheworld img{ display: inline-block; }
+  
+  
+  #worldclass {
+  background: #b7da02;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  text-align: center; }
+  #worldclass .container {
+    position: relative; }
+  #worldclass h3 {
+    font-family: "league_gothicregular", sans-serif;
+    text-transform: uppercase;
+    color:#ffffff;
+    text-align: center;
+    line-height: 50px;
+    font-size: 60px;
+    font-weight: normal;
+    margin: 0 0 100px;
+    position: relative;
+    z-index: 600; }
+  #worldclass img{ display: inline-block; }
+  
+  
+  
+  #passion1 {
+  padding-top: 150px;
+  padding-bottom: 150px;
+  text-align: center; }
+  #passion1 .container {
+    position: relative; }
+  #passion1 h3 {
+    font-family: "league_gothicregular", sans-serif;
+    text-transform: uppercase;
+    color: #292a2d;
+    text-align: center;
+    font-size: 50px;
+    font-weight: normal;
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 600; }
+  #passion1 img{ padding-top: 80px; padding-bottom: 80px; }
+  #passion1 p{ font-family: proximanovalight, century gothic, arial, sans-serif; font-size: 30px; line-height: 50px; color: #a0aaae;  }
+  
+  
+  #passion2 {
+  background: #f92899;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  text-align: center; }
+  #passion1 .container {
+    position: relative; }
+  #passion2 p{ font-family: proximanovalight, century gothic, arial, sans-serif; font-size:19px; line-height: 30px; color:#ffffff;  }

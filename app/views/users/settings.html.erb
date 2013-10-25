@@ -1,0 +1,173 @@
+<% content_for :subtitle do %>
+	Settings
+<%end%>
+
+<% content_for :include_css do %>
+  	<%= stylesheet_link_tag "new_style/settings-kreyos" %>
+<% end %>
+
+<% content_for :include_js do %>
+	<%= javascript_include_tag "users/settings" %>
+	<%= javascript_include_tag "jquery.scrollTo.js" %>
+<% end %>
+
+<script>
+	$(function(){
+		check_current_height_weight_unit('<%= @height_unit %>', '<%= @weight_unit %>');
+		
+	});
+</script>
+
+<style>
+	.modal-body { min-height: 100px; }
+	.alert { padding: 15px; }
+	#errorContainer { margin-top: -20px; font-size: 100%;}
+	.alert .close { right: 0!important; }
+	#ErrornotificationContainer { font-size: 15px!important; }
+	#SuccessnotificationContainer { font-size: 15px!important; }
+	.save-btn:focus { outline-width: 0; }
+	.formLabel60 { line-height: 60px; }
+	.formLabel35 { line-height: 30px; }
+</style>
+
+<div id="container" style="margin-top: 100px; margin-bottom: 100px; ">
+    <div id="title">
+    	<div class="img"><img src="http://graph.facebook.com/<%= logged_user['uid']%>/picture?type=square"></div>
+        <!-- <a href="#"><div class="img"><div class="overlay">CHANGE</div><img src="/assets/new_style/img_settings/user_img.png"></div></a> -->
+        <h1>ACCOUNT SETTINGS</h1>
+        <p><%= @settings['basic_info'][0]['name'] %>, here you can update your account information.</p>
+        <div class="clear"></div>
+    </div>
+    <form id="frmSettings" action="/settings/save" method="post">
+    	
+    <div id="left-container">
+    	<a name="noti"></a>
+		<div id="ErrornotificationContainer" class="alert alert-error" style="display:none;">
+			<div id="errorContainer"></div>
+		</div>
+		
+		<% if flash[:notification] %>
+			<div id="SuccessnotificationContainer" class="alert alert-success"> 
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= flash[:notification] %>
+			</div>
+		<% else %>
+			<div id="SuccessnotificationContainer" class="alert alert-success" style="display:none;"> 
+			</div>
+		<% end %>
+		
+        <div class="title">profile<div class="title-sep"></div></div>
+	
+            <label for="dvSettings_fname" class="formLabel60">Full Name<input type="text" id="dvSettings_fname" name="[user][fname]" value="<%= @settings['basic_info'][0]['name'] %>" ></label><div class="clear"></div>
+            <label for="dvSettings_nickname" class="formLabel60">Nickname <input type="text" id="dvSettings_nickname" name="[user][nickname]" value="<%= @settings['basic_info'][0]['nickname'] %>" ></label> <div class="clear"></div>
+            <label for="dvSettings_email" class="formLabel60">Email Address <input type="text" name="email" id="dvSettings_email" value="<%= @settings['basic_info'][0]['email'] %>" disabled="disabled"></label> <div class="clear"></div>
+
+        <div class="title">location<div class="title-sep"></div></div><div class="clear"></div>
+
+            <label for="dvSettings_city" class="formLabel60">City <input type="text" id="dvSettings_city" name="[user][city]" value="<%= @settings['dimentions'][0]['city']%>"></label> <div class="clear"></div>
+            <label for="dvSettings_state" class="formLabel60">State <input type="text" id="dvSettings_state" name="[user][state]"  value="<%= @settings['dimentions'][0]['state']%>"></label> <div class="clear"></div>
+            <!-- <label>State 
+                <select>
+                    <option>California</option>
+                </select>
+            </label><div class="clear"></div> -->
+            
+            <label for="dvSettings_zip" class="formLabel60"> Zip Code <input type="text" id="dvSettings_zip" name="[user][zip]" value="<%= @settings['dimentions'][0]['zip']%>"></label><div class="clear"></div>
+            <label class="formLabel35">Country 
+                <select>
+                    <option>United States</option>
+                    <option>Philippines</option>
+                </select>
+            </label><div class="clear"></div>
+            
+
+    </div><!-- end left-container -->
+
+    <div id="right-container">
+        <div class="title">gender</div>
+		<% if @settings['basic_info'][0]['gender'] == 'male' %>
+			<label for="male" style="margin-right: 64px;"><input type="radio" name="[user][gender]" id="male" checked="checked"> Male</label>
+        	<label for="female"><input type="radio" name="[user][gender]" id="female"> Female</label>
+		<% else %>
+			<label for="male" style="margin-right: 64px;"><input type="radio" name="male" id="male"> Male</label>
+        	<label for="female"><input type="radio" name="female" id="female" checked="checked"> Female</label>
+		<% end %>
+    </div><!-- end right-container -->
+
+    <div id="right-container">
+        <div class="title">height</div>
+		<% if @settings['dimentions'][0]['height']['unit'] == "cm" %>
+			<label for="rdftInch" style="margin-right: 17px;"><input type="radio" name="[user][height_unit]" value="feet" id="rdftInch"> Feet/Inches</label>
+        	<label for="rdCm"><input type="radio" name="[user][height_unit]" value="cm" id="rdCm" checked="checked"> Centimeters</label>
+		<% else %>
+			<label for="rdftInch" style="margin-right: 17px;"><input type="radio" name="[user][height_unit]" value="feet"  id="rdftInch" checked="checked"> Feet/Inches</label>
+        	<label for="rdCm"><input type="radio" name="[user][height_unit]" value="cm" id="rdCm"> Centimeters</label>
+		<% end %>
+        
+        <!-- <div class="input-prepend">
+            
+            <input id="prependedInput" type="text" placeholder="5">
+            <span id="unit" class="add-on">FEET</span>
+            
+            <input id="prependedInput" type="text" placeholder="11">
+            <span id="unit" class="add-on">INCHES</span>
+        </div> -->
+        <div class="input-prepend">
+        	
+            <input type="text" id="txtheightValue" name="[user][height_value]" value="<%= @settings['dimentions'][0]['height']['value'] %>">
+            <% if @settings['dimentions'][0]['height']['unit'] == "cm" %>
+			<span id="unit-height" class="add-on">CENTIMETERS</span>
+			<% else %>
+				<span id="unit-height" class="add-on">FEET/INCHES</span>
+			<% end %>
+            
+        </div>
+    </div><!-- end right-container -->
+
+    <div id="right-container">
+        <div class="title">weight</div>
+		
+		<% if @settings['dimentions'][0]['weight']['unit'] == "kg" %>
+			<label for="rdkg" style="margin-right: 30px;"><input type="radio" name="[user][weight_unit]" value="kg" id="rdkg" checked="checked"> Kilograms</label>
+        	<label for="rdlbs"><input type="radio" name="[user][weight_unit]" value="lbs" id="rdlbs"> Pounds</label>
+		<% else %>
+			<label for="rdkg" style="margin-right: 30px;"><input type="radio" name="[user][weight_unit]" value="kg" id="rdkg"> Kilograms</label>
+        	<label for="rdlbs"><input type="radio" name="[user][weight_unit]" value="lbs" id="rdlbs" checked="checked"> Pounds</label>
+		<% end %>
+        
+
+        <div class="input-prepend">
+            
+            <input type="text" id="weight-pounds" name="[user][weight_value]" value="<%= @settings['dimentions'][0]['weight']['value'] %>">
+            <% if @settings['dimentions'][0]['weight']['unit'] == "kg" %>
+				<span id="unit-weight" class="add-on">KILOGRAMS</span>
+			<% else %>
+				<span id="unit-weight" class="add-on">POUNDS</span>
+			<% end %>
+            
+        </div>
+    </div><!-- end right-container -->
+
+    <div id="right-container">
+        <div class="title">distance</div>
+		
+		<% if @settings['dimentions'][0]['distance'] == "km" %>
+			<label for="rdDistanceKM" style="margin-right: 25px;"><input type="radio" name="[user][distance]" value="km" id="rdDistanceKM" checked="checked"> Kilometers</label>
+        	<label for="rdDistanceMI"><input type="radio" name="[user][distance]" value="mi" id="rdDistanceMI"> Miles</label>
+		<% else %>
+			<label for="rdDistanceKM" style="margin-right: 25px;"><input type="radio" name="[user][distance]" value="km" id="rdDistanceKM"> Kilometers</label>
+        	<label for="rdDistanceMI"><input type="radio" name="[user][distance]" value="mi" id="rdDistanceMI" checked="checked"> Miles</label>
+		<% end %>
+        
+    </div><!-- end right-container -->
+    <div class="clear"></div>
+
+    <div class="sep"></div>
+
+    <div id="buttons">
+        <!-- <input type="button" class="cancel-btn"> -->
+        <input type="button" class="save-btn" id="btn-Settings-Save">
+    </div><!-- end buttons -->
+</div><!-- end container -->
+</form>
+

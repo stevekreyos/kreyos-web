@@ -1,0 +1,61 @@
+#wrapper{
+  margin-top: 100px;
+  margin-bottom: 100px;
+  }
+  
+#wrapper h1{
+    font-family: league_gothicregular, sans-serif;
+    text-transform: uppercase;
+    color: #000000;
+    text-align: center;
+    line-height: 70px;
+    font-size: 75px;
+    font-weight: normal;
+    margin: 0 0 15px;
+    position: relative;
+}
+    
+#wrapper p{
+  margin-top: 30px;
+  font-family: proximanovalight, sans-serif;
+  font-size: 17px;
+  color:#8b9499;
+  line-height: 25px;
+  text-align: center;
+}
+
+#meteor img{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 70px;
+}
+
+#suggestion{
+  font-family: league_gothicregular, sans-serif;
+  text-transform: uppercase;
+  color: #000000;
+  text-align: center;
+  line-height: 30px;
+  font-size: 30px;
+  margin-top: 50px;
+}
+
+#comment{
+  height: 220px;
+  position: relative;
+}
+
+#comment p{
+  font-family:  proximanovalight, sans-serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #000000;
+  line-height: 20px;
+  text-align: left;
+}
+
+#comment img{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+nav { font-family: 'Exo', sans-serif; font-size: 1.25em; font-weight: 600; text-transform: uppercase; }
+nav ul, nav ul ul { list-style:none; margin:0; }
+nav li { float:left; margin-left: 35px; height:50px; overflow: visible; }
+nav li:hover { background: url('common/marker-currentPage.png') no-repeat center 40px;}
+
+	nav li a { text-decoration:none; color:#504e4e;}
+	nav li a:hover { color:#7c43ad; text-decoration:none;}
+
+		nav ul ul { display:none; padding:0; }
+		nav li li { font-family: Arial, Helvetica, Sans-serif; font-size: 1em; }

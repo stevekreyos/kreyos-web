@@ -1,0 +1,139 @@
+@charset "UTF-8";
+/* Settings Page's Tab and Page Content Styles*/
+
+#dvTab-Content-wrap { width:958px; height: auto; overflow:auto; margin:0 auto 50px auto; border:1px solid #ccc; border-radius:5px; background:url('../../assets/common/settings/leftTabs-BG.png') repeat-y 189px 0; }
+#dvSettings-titleBar { height:50px; background:#ddd url('../../assets/common/dashboard/activityTab-bg.png') repeat-x top left; padding:5px; }
+#dvSettings-titleBar img { margin:8px; display: block; }
+#dvSettings-titleBar h2 { color:#783fa9; font-size:20px; margin:0; text-shadow: 0 1px 0 #fff; }
+
+
+/* ------------------------------------------------- */
+
+
+#dvSettings-LeftTabs { width:220px; height:auto; float:left; margin-left:30px; padding-top:20px; padding-bottom:20px; }
+#dvSettings-LeftTabs ul, li { list-style:none; margin:0; padding:0;  }
+#dvSettings-LeftTabs li { border:0px solid red; overflow: visible; margin:20px 0; }
+#dvSettings-LeftTabs h3 { font-size:17px; margin:5px 0 0 0; color:#888; padding:0; }
+	#dvleftTabs-account { height:28px; padding-left:40px; overflow:auto; background:url('../../assets/common/settings/icon-settingsLeft-account.png') no-repeat top left; }
+	#dvleftTabs-privacy { height:28px; padding-left:40px; overflow:auto; background:url('../../assets/common/settings/icon-settingsLeft-privacy.png') no-repeat top left; }
+	#dvleftTabs-address { height:28px; padding-left:40px; overflow:auto; background:url('../../assets/common/settings/icon-settingsLeft-address.png') no-repeat top left; }
+	#dvleftTabs-sharing { height:28px; padding-left:40px; overflow:auto; background:url('../../assets/common/settings/icon-settingsLeft-sharing.png') no-repeat top left; }
+	#dvleftTabs-notification { height:28px; padding-left:40px; overflow:auto; background:url('../../assets/common/settings/icon-settingsLeft-notification.png') no-repeat top left; }
+#dvSettings-LeftTabs a { text-decoration:none !important;}
+#dvSettings-LeftTabs li a { color:#888; }
+#dvSettings-LeftTabs li a:hover h3 { color:#783fa9 !important; }
+	#dvleftTabs-account:hover  { background-position:bottom left; }
+	#dvleftTabs-privacy:hover  { background-position:bottom left; }
+	#dvleftTabs-address:hover  { background-position:bottom left; }
+	#dvleftTabs-sharing:hover  { background-position:bottom left; }
+	#dvleftTabs-notification:hover  { background-position:bottom left; }
+	
+#dvSettings-LeftTabs li:hover { background:url('../../assets/common/settings/markerLeftTab-current.png') no-repeat 200px 4px !important; }
+
+
+/* ------------------------------------------------- */
+
+/* ------------------------------------------------- */
+
+#dvSettings-RightContents { width:650px; height:auto; overflow: auto; float:right; margin:40px 25px 25px 0;}
+
+#tab1 { height: auto; width:650px; overflow: auto; }
+#tab2 { height: 300px; width:650px; overflow: auto; }
+#tab3 { height: 300px; width:650px; overflow: auto; }
+#tab4 { height: 300px; width:650px; overflow: auto; }
+#tab5 { height: 300px; width:650px; overflow: auto; }
+
+
+/* ------------------------------------------------- */
+
+.tab_content { display: none; padding: 0;}
+.tab_content img { margin-right:15px; }
+.tab_content h1 { margin:5px 0 0; line-height:0; }
+
+#tab1 { display:block; }
+#tab1 h1 { color:#783fa9; margin-top:20px; margin-bottom:20px; }
+
+/* ------------------------------------------------- */
+
+#tabContent-wrap { height:auto; width:auto; overflow: auto; }
+#tabContent-wrap h1 { color:#783fa9; margin:30px 0; }
+
+
+/* ------------------------------------------------- */
+
+.styled-select select {
+   width: 150px;
+   padding: 5px;
+   font-size: 14px;
+   line-height: 1;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   height: 28px;
+   float:left;
+   margin-right:20px;
+   }
+
+
+/* ------------------------------------------------- */
+
+#dvSettings-Photo-About { width:95%; height:auto; padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid #efefef; }
+#dvSettings-Photo-box { float:left; width:auto; margin-top:30px; }
+#dvSettings-Photo-box ul, #dvSettings-Photo-box li { margin:0; padding:0; list-style:none; }
+
+#dvSettings-About-box { float:left; width:620px; height:auto; overflow:auto; }
+#dvSettings-About-box h3  { margin:12px 0; color:#888; }
+#dvSettings-About-box textarea { min-width:600px; max-width:600px; min-height:85px; max-height:85px; padding:8px; margin:0; background:#fafafa; border:1px solid #ccc; font-size:14px; }
+
+/* ------------------------------------------------- */
+
+#dvSettings-UserCredentials { width:100%; height:auto; padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid #efefef; }
+#dvSettings-FirstName, #dvSettings-LastName, #dvSettings-NickName, #dvSettings-EmailAddress, #dvSettings-Password { width:auto; margin-right:20px; display:inline-table; }
+	#dvSettings-FirstName h3, #dvSettings-LastName h3, #dvSettings-NickName h3, #dvSettings-EmailAddress h3, #dvSettings-Password h3 { margin:12px 0 6px 0; color:#888; display:block; }
+	#dvSettings-FirstName input, #dvSettings-LastName input, #dvSettings-NickName input, #dvSettings-EmailAddress input { width:285px; height:30px; font-size:14px; padding-left:8px; }
+	#dvSettings-Password input { width:180px; height:30px; font-size:14px; background:#fafafa; color:#777; padding-left:8px; }
+	#dvSettings-Password img { padding:0; margin:0 0 0 10px; vertical-align:bottom !important; }
+
+/* ------------------------------------------------- */
+
+#dvSettings-Bio { width:100%; height:auto; padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid #efefef; overflow:auto; }
+#dvSettings-Bio h3 { margin:12px 0 6px 0; color:#888; display:block; }
+#dvSettings-Birthday { margin-bottom: 20px; overflow: auto; }
+
+
+/* ------------------------------------------------- */
+
+#dvSettings-Gender, #dvSettings-Height, #dvSettings-Weight, #dvSettings-Distance { margin-bottom:20px; overflow: auto; }
+#dvSettings-Gender h3, #dvSettings-Height h3, #dvSettings-Weight h3, #dvSettings-Distance h3, #dvSettings-Distance h3  { margin:12px 0 6px 0; color:#888; display:block; }
+#dvSettings-radioMale, 
+#dvSettings-radioFemale, 
+#dvSettings-radioFeetInches,
+#dvSettings-radioCentimeters,
+#dvSettings-radioKgs,
+#dvSettings-radioLbs,
+#dvSettings-radioKM,
+#dvSettings-radioMiles { width:100px; height: auto; margin-right:20px; float:left !important; }
+
+#dvSettings-Weight input { height:30px; font-size:14px; padding-left:8px; margin-right:10px; }
+
+/* ------------------------------------------------- */
+
+#dvSettings-Location { width:100%; height:auto; padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid #efefef; }
+#dvSettings-Country, #dvSettings-State, #dvSettings-City, #dvSettings-ZipCode { width:auto; margin-right:20px; display:inline-table; }
+#dvSettings-Country h3, #dvSettings-State h3, #dvSettings-City h3, #dvSettings-ZipCode h3 { margin:12px 0 6px 0; color:#888; display:block; }
+#dvSettings-Country input, #dvSettings-State input, #dvSettings-City input, #dvSettings-ZipCode input { width:285px; height:30px; font-size:14px; padding-left:8px; }
+
+
+/* ------------------------------------------------- */
+
+#dvSettings-Save-Edit { width:100%; height:auto; padding-bottom:20px; margin-bottom:50px; margin-top:20px; border-bottom:1px solid #efefef overfloat:auto; }
+#btn-Settings-Save { width:94px; height:38px; background:url('../../assets/common/settings/btn-settings-save.png')no-repeat top left; float:left; margin-right:20px; cursor:pointer; }
+#btn-Settings-Edit { width:94px; height:38px; background:url('../../assets/common/settings/btn-settings-edit.png')no-repeat top left; float:left; margin-right:20px; }
+#btn-Settings-Save:hover, #btn-Settings-Edit:hover { background-position: bottom left; }
+
+
+.active { color:#783fa9!important; background-position:bottom left!important; }
+input:focus, textarea:focus, select:focus { outline-width: 0; }
+
+
+
+

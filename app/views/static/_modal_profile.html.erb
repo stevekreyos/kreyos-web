@@ -1,0 +1,544 @@
+<%= stylesheet_link_tag "bootstrap-switch"%>
+
+<style>
+	.txt-height { border-bottom: solid #e0e0e0 1px; border-top: 0!important; border-left: 0!important; border-right: 0!important; height: 100px!important; width: 60px; font-size: 90px!important; background: transparent!important; text-align: right; }
+	.inch-foot { font-size:90px; padding:65px 0 0 10px!important; }
+	.forms { float:left; }
+	.buttons { float:left; }
+	select:focus, textarea:focus, input:focus{ outline: 0; }
+</style>
+
+<script>
+	var ischecked;
+	var weight_ischecked = true;
+	var distance_ischecked = true;
+	var distance = "km";
+	
+	$(document).ready(function(){
+		
+		<% if session[:modal_height] == 1 %>
+			$('#forHeight').append('<a href="#"><div class="edit" id="btnUpdateHeight">Tell us  your height<span style="float: right;">+</span></div><div class="clear"></div></a>');
+		<% end %>
+		
+		<% if session[:modal_weight] == 1 %>
+			$('#forWeight').append('<a href="#"><div class="edit" id="btnUpdateWeight">Tell us your weight <span style="float: right;">+</span></div><div class="clear"></div></a>');
+		<% end %>
+		
+		<% if session[:modal_distance] == 1 %>
+			$('#forDistance').append('<a href="#"><div class="edit" id="btnUpdateDistance">Choose Distance Unit<span style="float: right;">+</span></div><div class="clear"></div></a>');
+		<% end %>
+		
+		<% if session[:modal_country] == 1 %>
+			$('#forLocation').append('<a href="#"><div class="edit" id="btnUpdateLocation" style="border: none;">Update your location<span style="float: right;">+</span></div><div class="clear"></div></a>');
+		<% end %>
+		
+		$('#btnUpdateHeight').click(function(){
+			$('#modal_height').modal('show');
+		});
+		
+		$('#btnUpdateWeight').click(function(){
+			$('#modal_weight').modal('show');
+		});
+		
+		$('#btnUpdateDistance').click(function(){
+			$('#modal_distance').modal('show');
+		});
+		
+		$('#btnUpdateLocation').click(function(){
+			$('#modal_country').modal('show');
+		})
+		
+		
+		numbers_only();
+		
+		// About Me
+		$('#btnSaveAboutMe').click(function(){
+			
+			var about_me = $('#profileTextArea').val().trim();
+			
+			if(about_me == ""){
+				$('#errorMessage').css('display', 'block');
+				$('#errorMessage').html('Please write a few words about yourself');
+			}else{
+				$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'about_me', value: about_me},
+				success: function(data){
+					next('modal_about_me', data);
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});	
+			}
+		});
+		
+		// Height
+		$('#heightSwitch').on('switch-change', function (e, data) {
+		    ischecked = data.value;
+		    var centimeter = "";
+		    var inches_value = "";
+		    var feet_value = "";
+			
+			// Conversion
+		   	if(ischecked == true){
+		   		var txt_ft = $('#txt_feet').val();
+		   		var txt_inch = $('#txt_inches').val();
+		   		
+		   		if(txt_ft != "" || txt_inch != ""){
+		   			var centimeter = Math.round((parseInt(txt_ft * 12) + parseInt(txt_inch)) * 2.54);
+		   		}
+		   	}else{
+		   		var txt_cm = $('#txt_centimeter').val();
+		   		
+		   		if(txt_cm != ""){
+		   			var inches_value = (txt_cm * 0.393700787).toFixed(0);
+			    	var feet_value = Math.floor(inches_value / 12);
+			    	inches_value %= 12;
+		   		}
+		   	}
+			
+			// Empty form
+		    $('#form').empty();
+		    
+		    // Append form if Centimeter or Feet-inches
+		    if(ischecked == true){
+		    	
+		    	if(centimeter == ""){
+		    		$('#form').append('<input type="text" id="txt_centimeter" class="txt-height" maxlength="3" style="width:150px;float:left;"><div class="inch-foot">cm</div>');
+		    	}else{
+		    		$('#form').append('<input type="text" id="txt_centimeter" class="txt-height" value="'+ centimeter +'" maxlength="3" style="width:150px;float:left;"><div class="inch-foot">cm</div>');
+		    	}
+		    }else{
+		    			    	
+		    	if(feet_value === "" || inches_value === ""){
+		    		$('#form').append('<input type="text" id="txt_feet" class="txt-height" maxlength="1"><span class="inch-foot">\'</span><input type="text" id="txt_inches" class="txt-height" maxlength="2" style="width:100px;"><span class="inch-foot">"</span>');	
+		    	}else{
+					$('#form').append('<input type="text" id="txt_feet" class="txt-height" value="'+ feet_value +'" maxlength="1"><span class="inch-foot">\'</span><input type="text" id="txt_inches" class="txt-height" value="'+ inches_value +'" maxlength="2" style="width:100px;"><span class="inch-foot">"</span>');
+		    	}
+		    }
+		    
+		   numbers_only();
+		});
+		
+		$('#btnSaveHeight').click(function(){
+			if(ischecked == true){
+				validate_centimeter();
+			}else{
+				validate_feet_inches();
+			}
+		});
+		
+		// Weight
+		
+		$('#weightSwitch').on('switch-change', function (e, data) {
+			weight_ischecked = data.value;
+			var lbs_value = "";
+			var kgs_value = "";
+			
+			if(weight_ischecked == true){
+				var txtlbs = $('#txt_lbs').val();
+				kgs_value = Math.round(txtlbs / 2.2);
+			}else{
+				var txtkgs = $('#txt_kgs').val();
+				lbs_value = Math.round(txtkgs * 2.2);
+			}
+			
+			
+			// Empty form
+		    $('#weightForm').empty();
+		    
+		    // Append Form
+		    if(weight_ischecked == true){
+		    	if(kgs_value === ""){
+		    		$('#weightForm').append('<input type="text" id="txt_kgs" class="txt-height" maxlength="3" style="width:150px;float:left;">');	
+		    	}else{
+		    		$('#weightForm').append('<input type="text" id="txt_kgs" value="'+ kgs_value +'" class="txt-height" maxlength="3" style="width:150px;float:left;">');
+		    	}
+		    }else{
+		    	if(lbs_value === ""){
+		    		$('#weightForm').append('<input type="text" id="txt_lbs" class="txt-height" maxlength="3" style="width:150px;float:left;">')	
+		    	}else{
+		    		$('#weightForm').append('<input type="text" id="txt_lbs" value="'+ lbs_value +'" class="txt-height" maxlength="3" style="width:150px;float:left;">')
+		    	}
+		    }
+		    
+		    numbers_only();
+		});
+		
+		$('#btnSaveWeight').click(function(){
+			if(weight_ischecked == true){
+				validate_kilograms();
+			}else{
+				validate_pounds();
+			}
+		});
+		
+		// Distance
+		$('#distanceSwitch').on('switch-change', function (e, data) {
+			distance_ischecked = data.value;
+			
+			if(distance_ischecked == true){
+				distance = "km";
+			}else{
+				distance = 'miles';
+			}
+		});
+		
+		$('#btnSaveDistance').click(function(){
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'distance', value: distance },
+				success: function(data){
+					next('modal_distance', data);
+					$('#forDistance').remove();
+					var new_val = parseInt($('#total_progress_precentage').html()) + parseInt(10);
+					$('#total_progress_precentage').html(new_val);
+					document.cookie = "total_progress_precentage =" + new_val;
+					$('#progress_bar').css('width', parseInt(new_val)+"%");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});	
+		});
+		
+		$('#btnSaveCountry').click(function(){
+			validate_country();
+		});
+		
+	});
+	
+	
+	// Get next modal
+	function next(modal, data){
+		$('#'+modal).modal('hide');
+		
+		if(data.height_value != null && data.weight_value != null && data.distance != null && data.country != null && data.city != null && data.zip != null){
+			
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'complete'},
+				success: function(data){
+					console.log("Complete");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+		}
+	}
+	
+	function numbers_only(){
+		
+		$("#txt_feet, #txt_inches, #txt_centimeter, #txt_kgs, #txt_lbs, #txt_zip").keydown(function(event) {
+	        // Allow: backspace, delete, tab, escape, and enter
+	        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+	             // Allow: Ctrl+A
+	            (event.keyCode == 65 && event.ctrlKey === true) || 
+	             // Allow: home, end, left, right
+	            (event.keyCode >= 35 && event.keyCode <= 39)) {
+	                 // let it happen, don't do anything
+	                 return;
+	        }
+	        else {
+	            // Ensure that it is a number and stop the keypress
+	            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+	                event.preventDefault(); 
+	            }   
+	        }
+	    });
+	}
+	
+	// Save validation kilograms
+	function validate_kilograms(){
+		var kg = $('#txt_kgs').val().trim();
+		
+		if(kg == ""){
+			$('#weightErrorMessage').css('display', 'block');
+			$('#weightErrorMessage').html('Weight is required');
+		}else{
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'weight', value: kg, unit: 'kg'},
+				success: function(data){
+					next('modal_weight', data);
+					$('#forWeight').remove();
+					var new_val = parseInt($('#total_progress_precentage').html()) + parseInt(10);
+					$('#total_progress_precentage').html(new_val);
+					document.cookie = "total_progress_precentage =" + new_val;
+					$('#progress_bar').css('width', parseInt(new_val)+"%");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+		}
+	}
+	
+	function validate_pounds(){
+		var lbs = $('#txt_lbs').val().trim();
+		
+		if(lbs == ""){
+			$('#weightErrorMessage').css('display', 'block');
+			$('#weightErrorMessage').html('Weight is required');
+		}else{
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'weight', value: lbs, unit: 'lbs'},
+				success: function(data){
+					next('modal_weight', data);
+					$('#forWeight').remove();
+					var new_val = parseInt($('#total_progress_precentage').html()) + parseInt(10);
+					$('#total_progress_precentage').html(new_val);
+					document.cookie = "total_progress_precentage =" + new_val;
+					$('#progress_bar').css('width', parseInt(new_val)+"%");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});	
+		}
+	}
+
+	// Save validation feet/inches
+	function validate_feet_inches(){
+		var feet = $('#txt_feet').val().trim();
+		var inches = $('#txt_inches').val().trim();
+		
+		if(feet == '' || inches == ''){
+			$('#modal_height .modal-body').css('min-height', '264px');
+			$('#modal_height .modal-body').css('max-height', '264px');
+			$('#heightErrorMessage').css('display', 'block');
+			$('#heightErrorMessage').html('Height is required');
+		}else{
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'height', value: feet +'\'' + inches + '"', unit: 'feet'},
+				success: function(data){
+					next('modal_height', data);
+					$('#forHeight').remove();
+					var new_val = parseInt($('#total_progress_precentage').html()) + parseInt(10);
+					$('#total_progress_precentage').html(new_val);
+					document.cookie = "total_progress_precentage =" + new_val;
+					$('#progress_bar').css('width', parseInt(new_val)+"%");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});	
+		}
+	}
+	
+	// Save validation centimeter
+	function validate_centimeter(){
+		var cm = $('#txt_centimeter').val().trim();
+		
+		if(cm == ''){
+			$('#modal_height .modal-body').css('min-height', '264px');
+			$('#modal_height .modal-body').css('max-height', '264px');
+			$('#heightErrorMessage').css('display', 'block');
+			$('#heightErrorMessage').html('Height is required');
+		}else{
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'height', value: cm, unit: 'cm'},
+				success: function(data){
+					next('modal_height', data);
+					$('#forHeight').remove();
+					var new_val = parseInt($('#total_progress_precentage').html()) + parseInt(10);
+					$('#total_progress_precentage').html(new_val);
+					document.cookie = "total_progress_precentage =" + new_val;
+					$('#progress_bar').css('width', parseInt(new_val)+"%");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+		}
+	}
+	
+	function validate_country(){
+		var country = $('#slc_country').val();
+		var state = $('#txt_state').val();
+		var city = $('#txt_city').val().trim();
+		var zip = $('#txt_zip').val().trim();
+		var errContainer = document.getElementById('countryErrorMessage');
+		var errMessage = '';
+		var errFlag = false;
+		
+		if(country == "Country"){
+			errFlag = true;
+			errMessage = errMessage + "- Please select a country <br />"
+		}
+		
+		if(city == ""){
+			errFlag = true;
+			errMessage = errMessage + "- City is required <br />"
+		}
+		
+		if(zip == ""){
+			errFlag = true;
+			errMessage = errMessage + "- Zip Code is required <br />"
+		}
+		
+		if(errFlag){
+			$('#countryErrorMessage').css('display', 'block');
+			//errContainer.innerHTML = errMessage;
+			$('#countryErrorMessage').html(errMessage);
+		}else{
+			$.ajax({
+				type: 'get',
+				url: "profile/save",
+				data: { profile: 'country', country: country, state: state, city: city, zip: zip},
+				success: function(data){
+					next('modal_country', data);
+					$('#forLocation').remove();
+					var new_val = parseInt($('#total_progress_precentage').html()) + parseInt(30);
+					$('#total_progress_precentage').html(new_val);
+					document.cookie = "total_progress_precentage =" + new_val;
+					$('#progress_bar').css('width', parseInt(new_val)+"%");
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+		}
+	}
+</script>
+
+	<!-- <div id="alert-notification" class="alert alert-info">
+	  <button type="button" class="close" data-dismiss="alert" style="left: 25px;">&times;</button>
+	  <h4 style="margin-top: 0;">Complete your profile, <a href="/settings">click here.</a></h4>
+	</div> -->
+
+<!-- About Me -->
+<div id="modal_about_me" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>About you</h3>
+  </div>
+  <div class="modal-body">
+  	<div id="errorMessage" class="alert alert-error" style="display:none;"></div>
+  	<h3 style="margin-top:0;">Write a few words about yourself.</h3>
+  	<textarea id="profileTextArea" style="width:99%%;min-height: 100px;resize: none;"></textarea>	
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+    <a class="btn btn-primary" id="btnSaveAboutMe">Save</a>
+  </div>
+</div>
+
+
+<!-- Height -->
+<div id="modal_height" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-150px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Set your height</h3>
+  </div>
+  <div class="modal-body" style="min-height: 210px;max-height: 210px;">
+  	<div id="heightErrorMessage" class="alert alert-error" style="display:none;"></div>
+  	<div class="form">
+  		<div id="form">
+  			<input type="text" id="txt_feet" class="txt-height" maxlength="1"><span class="inch-foot">'</span>
+  			<input type="text" id="txt_inches" class="txt-height" maxlength="2" style="width:100px;"><span class="inch-foot">"</span>	
+  		</div>
+  	</div>
+	<div class="buttons" style="margin-top:20px;">
+		<p style="font-size: 15px;">Set my preference to:&nbsp;&nbsp;</p>
+		
+		<div id="heightSwitch" class="switch" data-on-label="cm" data-off-label="ft/in">
+		    <input type="checkbox" />
+		</div>
+	</div>
+	</div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+    <a class="btn btn-primary" id="btnSaveHeight">Save</a>
+  </div>
+</div>
+
+<!-- Weigth -->
+<div id="modal_weight" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:311px;margin-left:-150px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Set your weight</h3>
+  </div>
+  <div class="modal-body">
+  		<div id="weightErrorMessage" class="alert alert-error" style="display:none;"></div>
+  	
+  		<div id="weightForm">
+  			<input type="text" id="txt_kgs" class="txt-height" maxlength="3" style="width:150px;float:left;">
+  		</div>
+  		
+  		<!-- switch -->
+		<div id="weightSwitch" class="switch" data-on-label="kg" data-off-label="lbs" style="margin-top: 75px; margin-left: 15px;">
+		    <input type="checkbox" checked />
+		</div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+    <a href="#" class="btn btn-primary" id="btnSaveWeight">Save</a>
+  </div>
+</div>
+
+<!-- Distance -->
+<div id="modal_distance" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:311px;margin-left:-150px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Set Distance</h3>
+  </div>
+  <div class="modal-body">
+		<p style="font-size: 15px;">Set your distance preferences:</p>
+		<br /><br /> 
+		<!-- switch -->
+		<div id="distanceSwitch" class="switch switch-large" data-on-label="km" data-off-label="mi">
+		    <input type="checkbox" checked />
+		</div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+    <a href="#" class="btn btn-primary" id="btnSaveDistance">Save</a>
+  </div>
+</div>
+
+<!-- Country -->
+<div id="modal_country" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Set Country</h3>
+  </div>
+  <div class="modal-body">
+  	<div id="countryErrorMessage" class="alert alert-error" style="display:none;"></div>
+  	<p style="font-size: 15px;"><strong>Country:</strong></p>
+  	<select style="width: 530px;" id="slc_country">
+		<option value="Country">Select Country</option>
+		<option value="Philippines" selected="selected">Philippines</option>
+	</select>
+	<br /><br />
+	
+	<p style="font-size: 15px;"><strong>State:</strong></p>
+  	<input type="text" id="txt_state" style="width: 515px;" />
+  	<br /><br />
+  	
+  	<p style="font-size: 15px;"><strong>City:</strong></p>
+  	<input type="text" id="txt_city" style="width: 515px;" />
+  	<br /><br />
+  	
+  	<p style="font-size: 15px;"><strong>Zip Code:</strong></p>
+  	<input type="text" id="txt_zip" style="width:25%;" />
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+    <a href="#" class="btn btn-primary" id="btnSaveCountry">Save</a>
+  </div>
+</div>
+
+<%= javascript_include_tag "bootstrap-switch"%>

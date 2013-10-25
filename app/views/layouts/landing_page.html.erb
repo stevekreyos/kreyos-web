@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+	<title>Kreyos - Landing Page</title>
+	
+	<meta property="og:title" content="Kreyos"/>
+	<meta property="og:url" content="http://kreyos.nesventures.net"/>
+	<meta property="og:site_name" content="Kreyos"/>
+	<meta property="og:type" content="website" />
+	<meta property="og:description" content="Don't make a promise, Make a goal!" />
+	
+	<%= javascript_include_tag "http://code.jquery.com/jquery-1.7.2.min.js" %>
+	<%= javascript_include_tag "facebook" %>
+	<%= javascript_include_tag "landing/landing" %>
+	<link href="/assets/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+	<script src="/assets/bootstrap/bootstrap.min.js"></script>
+	<%= stylesheet_link_tag    "styles", :media => "all" %>
+  	<%= stylesheet_link_tag    "navigation", :media => "all" %>
+  	<%= stylesheet_link_tag    "footer", :media => "all" %>
+  	<%= stylesheet_link_tag    "http://fonts.googleapis.com/css?family=Exo:200,400,500,600,700,800,200italic,400italic,500italic,600italic,700italic,800italic", :media => "all" %>
+	<div id="fb_root"></div>
+	
+	
+	<%= yield :head %>
+	
+	<% if session[:order_modal] == 1%>
+		<script>
+		$(function(){
+			$("#mdlOrderID").modal('show');
+		});
+		</script>
+		<% session[:order_modal] = nil %>
+	<% end %>
+	
+	<% if session[:order_error_modal] == 1%>
+		<script>
+		$(function(){
+			$("#mdlOrderIDError").modal('show');
+		});
+		</script>
+		<% session[:order_error_modal] = nil %>
+	<% end %>
+	
+	<% if session[:error_modal] == 1%>
+		<script>
+		$(function(){
+			$("#mdlError").modal('show');
+		});
+		</script>
+		<% session[:error_modal] = nil %>
+	<% end %>
+
+	<style>
+		#site_run{height:auto;background:transparent url("/assets/img/run.JPG")  center fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover}
+	</style>
+	
+	<script>
+		$(document).ready(function(){
+			$('#headSearch').keypress(function(event){
+	        	var search_value = $(this).val().trim();
+	        	
+	        	if(event.keyCode == 13 && search_value != "" ){
+	        		window.open("http://kreyos.nesventures.net:8080/index.php/catalogsearch/result/?q=" + search_value);	
+	        	}
+	        });
+		});
+	</script>
+</head>
+
+<body>
+<div id="dvHead">
+	<div id="dvHead-wrap">
+		<div id="dvLogo"><a href="/"><img src="/assets/common/logo-kreyos.png" /></a></div>
+		<div id="dvHeaderElements">
+			<div id="dvSearch" class="rounded-corner4 shadow-inset" >
+				<input type="text" id="headSearch" placeholder="Search entire store"/>
+			</div>
+		</div>
+		<div id="dvNavigation">
+			<nav class="text-shdw-white">
+				<%=render :partial => "static/menu"%>
+			</nav>
+		</div>
+	</div>
+</div>
+<div id="dvPage" style="height: 550px; min-height: 550px!important;">
+	<div id="dvPage-wrap" style="overflow:hidden;">
+		<%= yield %>
+	</div>
+</div>
+<div id="dvFoot">
+	<div id="dvFoot-wrap">
+		<%=render :partial => "static/footer"%>
+	</div>
+</div>
+</body>
+</html>
+
+<div id="mdlOrderID" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <!-- close button-->
+    <h3 id="myModalLabel">Kreyos - Message</h3> <!-- Header-->
+  </div>
+  <div class="modal-body"> <!-- Body -->
+    <!-- You should buy our product first, <a href="http://kreyos.nesventures.net:8080/" target="_blank">Magento Shop</a> -->
+    <div id="error_container" class="alert alert-error" style="display:none;text-align:center;"></div>
+    <form action="/landing/order_id" method="post" id="frmOrderID">
+	    <table style="width:100%;">
+	    	<tr>
+	    		<td style="font-weight: bold; width: 65px;">Order ID:</td>
+	    		<td><input type="text" id="txtOrderID" name="order_id" style="width:98%;" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">&nbsp;</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">No <strong>Order ID</strong> yet? Please shop first at <a href="http://kreyos.nesventures.net:8080" target="_blank">Kreyos Magento Shop</a>.</td>
+	    	</tr>
+	    </table>
+	</form>
+  </div>
+  <div class="modal-footer"> <!-- Footer -->
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <a class="btn btn-primary" id="btnOrderIDSubmit">Submit</a>
+  </div>
+</div>
+
+
+<div id="mdlOrderIDError" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <!-- close button-->
+    <h3 id="myModalLabel">Kreyos - Message</h3> <!-- Header-->
+  </div>
+  <div class="modal-body"> <!-- Body -->
+    <strong>Order ID</strong> doesn't exist or might already be in use. Please try another Order ID. <br /><br />
+    No <strong>Order ID</strong> yet? Please shop first at <a href="http://kreyos.nesventures.net:8080" target="_blank">Kreyos Magento Shop</a>.
+  </div>
+  <div class="modal-footer"> <!-- Footer -->
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+<div id="mdlError" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <!-- close button-->
+    <h3 id="myModalLabel">Kreyos - Message</h3> <!-- Header-->
+  </div>
+  <div class="modal-body"> <!-- Body -->
+    There is unexpected error on server side.
+  </div>
+  <div class="modal-footer"> <!-- Footer -->
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

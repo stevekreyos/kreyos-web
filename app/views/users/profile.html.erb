@@ -1,0 +1,154 @@
+<% content_for :subtitle do %>
+	Profile
+<%end%>
+
+<% content_for :include_css do %>
+	<%= stylesheet_link_tag "new_style/profile-kreyos" %>
+<% end %>
+
+<% content_for :include_js do %>
+  	<%= javascript_include_tag "highcharts/highcharts" %>
+  	<%= javascript_include_tag "users/profile"%>
+<% end %>
+
+<style>
+	.level { margin-top: 5px!important; margin-left: -15px; }
+</style>
+
+ <%= render :partial => "static/profile_graphs" %>
+
+ <div id="container" style="margin-top: 100px; margin-bottom: 100px; ">
+    <div id="title">
+        <div class="img"><img src="http://graph.facebook.com/<%= logged_user['uid']%>/picture?type=square"></div>
+        <h1><%= logged_user['name'] %></h1>
+        <p>Member since <%= @my_profile[0]['member_since'][0]['member_since'] %></p>
+        <div class="clear"></div>
+    </div>
+
+    <div id="left">
+        <div id="left-container">
+            <div id="userinfo">
+            	<% @level.sort! { |a,b| a[:name] <=> b[:name] }.last(1).each do |current_level| %>
+					<div class="info-container"><h2 class="level"><%= current_level[:name] %></h2></div>
+				<% end %>
+                <div class="info-container"><h2 class="points"><%= @my_profile[0]['points'].to_i %> <span style="font-size: 18px;">points</span></h2> </div>
+                <!-- <div class="info-container"><h2>age</h2> <p>28</p>  </div> -->
+                <div class="info-container"><h2>sex</h2> <p><%= @my_profile[0]['info'][0]['gender'] %></p> </div>
+                <div class="info-container" style="border: none;"><h2>location</h2> <p><%= @my_profile[0]['info'][0]['country'] %>, <%= @my_profile[0]['info'][0]['city'] %></p></div>
+                <div class="clear"></div>
+            </div><!-- end userinfo -->
+
+            <div id="graph-wrapper">
+                <div style="float: left;">
+                    <h3>today's activity</h3>
+                </div>  
+
+                <div class="categories" style="float: right;">
+                	<ul id="tabs">
+                		<li><a href="#for_steps" id="btnSteps">steps</a></li>
+                		<li><a href="#for_calories" id="btnCalories">calories</a></li>
+                		<li><a href="#for_distance" id="btnDistance">Distance</a></li>
+                	</ul>
+                </div>
+				
+                <div class="clear"></div>
+
+                <!-- <div id="graph"></div> -->
+                <!-- Tab For Steps -->
+                <div id="for_steps" class="tab_content">
+                	<div id="graph-steps" style="width: 735px; height: 400px;"></div>
+               	</div>
+               	
+               	<!-- Tab For Calories -->
+               	<div id="for_calories" class="tab_content">
+               		<div id="graph-cal" style="width: 735px; height: 400px;"></div>
+               	</div>
+               	
+               	<!-- Tab For Distance -->
+               	<div id="for_distance" class="tab_content">
+					<div id="graph-km" style="width: 735px; height: 400px;"></div>               		
+               	</div>
+
+            </div><!-- end graph-wrapper -->
+        </div><!-- end left-container -->
+
+        <!-- <div id="left-container">
+            <div class="title">30 day activity<div class="title-sep"></div></div>
+            <div class="date">September 16, 2013</div>
+
+            <div class="totals">
+               <b>14,049</b> Steps
+                <span style="margin: 0px 15px;"><b>1908</b> Calories Burned</span>
+                <b>18</b> Points Earned
+            </div>
+        </div> -->
+
+        <div id="left-container">
+            <div class="title">records<div class="title-sep"></div></div>
+			<% unless @my_profile.nil? %>
+               <% @my_profile[0]['recent_activities'].sort! {|a,b| a['created_at'] <=> b['created_at']}.last(4).reverse.each do |ra| %>
+                    <div class="record-container">
+		                <h4><%= ra['name'] %></h4>
+		                <p><%= Date.parse(ra['created_at']).strftime("%b. %d, %Y") %></p>
+		            </div>
+               <% end %>
+	        <% else%>
+	               <h4>No data available</h4>
+	        <% end %>
+
+            <div class="clear"></div>
+        </div>
+    </div><!-- end left -->
+
+
+
+    <div id="right">
+        <div id="right-container">
+            <div class="title">achievements</div>
+
+            <div class="achievements">
+                <!-- <img src="images/achievement_g.png" /> -->
+                
+ 				<% @my_profile[0]['recent_activities'].sort! {|a,b| a['created_at'] <=> b['created_at']}.reverse.first(9).each do |badge| %>
+                	<img src="<%= badge['image'] %>" style="width:60px; height:60px;padding-right: 5px;" title="<%= badge['name'] %>"/>
+                <% end %>
+            </div>
+
+            <div class="sep"></div>
+        </div>
+
+        <div id="right-container" class="achievement-stats">
+            <!-- <div class="as clearfix">
+                <h4>active days</h4>
+                <p>104</p>
+            </div>
+
+            <div class="as clearfix">
+                <h4>goals hit</h4>
+                <p>49%</p>
+            </div> -->
+
+            <div class="as clearfix">
+                <h4>lifetime steps</h4>
+                <p><%= @my_profile[0]['lifetime_points'][0]['steps'].to_i %></p>
+            </div>
+
+            <!-- <div class="as clearfix">
+                <h4>lifetime floors</h4>
+                <p>0</p>
+            </div> -->
+
+            <div class="as clearfix">
+                <h4>lifetime distance</h4>
+                <p><%= @my_profile[0]['lifetime_points'][1]['distance'].to_i %> <%= @my_profile[0]['lifetime_points'][1]['unit'] %></p>
+            </div>
+
+            
+        </div>
+    </div><!-- end right -->
+
+
+
+    <div class="clear"></div>
+
+</div><!-- end container -->

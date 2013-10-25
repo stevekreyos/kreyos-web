@@ -1,0 +1,142 @@
+$(document).ready(function(){
+	$('#bnt-Day').addClass('active');
+    //  When user clicks on tab, this code will be executed
+    $("#tabs li").click(function() {
+        //  First remove class "active" from currently active tab
+        // $("#tabs li").removeClass('active');
+        $("#tabs li").children('a').removeClass('active');
+ 
+        //  Now add class "active" to the selected/clicked tab
+        // $(this).addClass("active");
+        $(this).children('a').addClass('active');
+       
+ 
+        //  Hide all tab content
+        $(".tab_content").hide();
+ 
+        //  Here we get the href value of the selected tab
+        var selected_tab = $(this).find("a").attr("href");
+ 
+        //  Show the selected tab content
+        $(selected_tab).fadeIn();
+ 
+        //  At the end, we add return false so that the click on the link is not executed
+        return false;
+    });
+    
+    $('#bnt-CaloriesBurned').click(function(){
+    	$(this).addClass('current_activity');
+    	$('#dv-graph-steps').hide();
+    	$('#bnt-Steps').removeClass('current_activity');
+    	$('#dv-graph-kilometers').hide();
+    	$('#bnt-Kilometers').removeClass('current_activity');
+    	$('#dv-graph-calories').fadeIn();
+    });
+    
+    $('#bnt-Steps').click(function(){
+    	$(this).addClass('current_activity');
+    	$('#dv-graph-calories').hide();
+    	$('#bnt-CaloriesBurned').removeClass('current_activity');
+    	$('#dv-graph-kilometers').hide();
+    	$('#bnt-Kilometers').removeClass('current_activity');
+    	$('#dv-graph-steps').fadeIn();
+    });
+    
+    $('#bnt-Kilometers').click(function(){
+    	$(this).addClass('current_activity');
+    	$('#dv-graph-calories').hide();
+    	$('#bnt-CaloriesBurned').removeClass('current_activity');
+    	$('#dv-graph-steps').hide();
+    	$('#bnt-Steps').removeClass('current_activity');
+    	$('#dv-graph-kilometers').fadeIn();
+    });
+    
+    $('#GoalSExpires').datepicker({
+		format: "yyyy-mm-dd",
+		startDate: "0m",
+		endDate: "+2m",
+		autoclose: true
+	});
+		
+		$('#eGoalSExpires').datepicker({
+			format: "yyyy-mm-dd",
+			startDate: "0m",
+			endDate: "+2m",
+			autoclose: true
+		});
+		
+		$('#btnCall2ACt').click(function(){
+			$('#GoalDesc').val("");
+			$('#GoalCal').val("");
+			$('#GoalDistance').val("");
+			$('#GoalSteps').val("");
+			$('#GoalSExpires').val("");
+		});
+		
+		$('#btnGoalSave').click(function(){
+				frm_goal_validate();
+		});
+		
+		$('#btnGoalSaveEdit').click(function(){
+				frm_edit_goal_validate();
+				$('#editGoalModal').modal("hide");
+		});
+		
+		$('#btnGoalDel').click(function(){
+			var goal_id = $('#goal_id').val();
+			$('#deletGoalModal').modal("hide");
+			
+			window.location = "/delete_goal?goalID="+ goal_id;
+		})
+		
+		function frm_goal_validate(){
+			var txtDesc = $('#GoalDesc').val().trim();
+			var txtCal = $('#GoalCal').val().trim();
+			var txtDistance = $('#GoalDistance').val().trim();
+			var txtSteps = $('#GoalSteps').val().trim();
+			var txtExpires = $('#GoalSExpires').val().trim();
+			
+			if(txtDesc == '' || txtCal == '' || txtDistance == '' || txtSteps == '' || txtExpires == ''){
+				alert("All fields are required");
+				return false;
+			}else{
+				frm_goal = document.getElementById('frm_goals');
+				frm_goal.submit();
+			}
+		}
+		
+		function frm_edit_goal_validate(){
+			var txtDesc = $('#eGoalDesc').val().trim();
+			var txtCal = $('#eGoalCal').val().trim();
+			var txtDistance = $('#eGoalDistance').val().trim();
+			var txtSteps = $('#eGoalSteps').val().trim();
+			var txtExpires = $('#eGoalSExpires').val().trim();
+			
+			if(txtDesc == '' || txtCal == '' || txtDistance == '' || txtSteps == '' || txtExpires == ''){
+				alert("All fields are required");
+				return false;
+			}else{
+				frm_edit_goal = document.getElementById('frm_edit_goals');
+				frm_edit_goal.submit();
+			}
+		}
+		
+		$("#GoalCal, #GoalDistance, #GoalSteps, #eGoalCal, #eGoalDistance, #eGoalSteps").keydown(function(event) {
+	        // Allow: backspace, delete, tab, escape, and enter
+	        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+	             // Allow: Ctrl+A
+	            (event.keyCode == 65 && event.ctrlKey === true) || 
+	             // Allow: home, end, left, right
+	            (event.keyCode >= 35 && event.keyCode <= 39)) {
+	                 // let it happen, don't do anything
+	                 return;
+	        }
+	        else {
+	            // Ensure that it is a number and stop the keypress
+	            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+	                event.preventDefault(); 
+	            }   
+	        }
+	    });
+    
+});

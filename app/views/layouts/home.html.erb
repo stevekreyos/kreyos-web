@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Kreyos - <%= yield :subtitle %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <%= stylesheet_link_tag "home/bootstrap" %>
+        <%= stylesheet_link_tag "home/style" %>
+        <!--[if lt IE 8]>
+            <%= stylesheet_link_tag "home/font-awesome-ie7.min" %>
+        <![endif]-->
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <%= javascript_include_tag "home/html5shiv" %>
+        <![endif]-->
+        
+        <%= javascript_include_tag 'home/jquery.min'%>
+
+        <script type="text/javascript">
+            WebFontConfig = {
+                google: {families:[
+                    'Lato:300,400,700,900:latin'
+                ]}
+            };
+            (function() {
+                var wf = document.createElement('script');
+                wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                wf.type = 'text/javascript';
+                wf.async = 'true';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(wf, s);
+            })();
+        </script>
+
+    </head>
+
+    <body>
+		
+		<div class="imgWatch_white"  style="display:none;"></div>
+		<div class="imgWatch_pink" style="display:none;"></div>
+		<div class="imgWatch_blue"  style="display:none;"></div>
+		<div class="imgWatch_lime"  style="display:none;"></div>
+		
+		<%= stylesheet_link_tag "home/home" %>
+		<%= stylesheet_link_tag "home/jquery.bxslider" %>
+		<%= javascript_include_tag 'home/home'%>
+		
+		<div class="page-container">
+			 <div id="nav" class="wrapper section">
+			    <div class="container">
+			        <a href="/" class="for_logo"><img src="/assets/home/kreyos-logo.png" alt="Kreyos"></a>
+			        <a id="btn-LoginFb">Login via Facebook</a>
+			        <!-- <a href="/admin/signout">Signout</a> -->
+			        <a href="#preorder" id="btnPreorder" class="smooth-scroll">Preorder Me</a>
+			    </div>
+			</div>
+            
+        	<%= yield %>
+        
+       </div>
+       <!-- Footer -->
+		<div id="footer" class="wrapper section">
+		    <div class="container">
+		        <%= render :partial => "static/footer" %>
+		    </div>
+		</div>
+
+        <!-- Placed at the end of the document so the pages load faster -->
+        <%= javascript_include_tag 'home/bootstrap'%>
+        <%= javascript_include_tag 'home/html5shiv'%>
+        <%= javascript_include_tag 'home/jquery.placeholder.min'%>
+        <%= javascript_include_tag 'home/impress'%>
+        <%= javascript_include_tag 'home/jquery.lazyload.min'%>
+        <%= javascript_include_tag 'home/yaxis'%>
+        <%= javascript_include_tag 'home/slider'%>
+        <%= javascript_include_tag 'home/jquery.slides.min'%>
+        <%= javascript_include_tag 'home/jquery.bxslider.min'%>
+        <%= javascript_include_tag 'home/scripts'%>
+        <%= javascript_include_tag 'facebook' %>
+		<!-- begin SnapEngage code -->
+		<script type="text/javascript">
+		  (function() {
+		    var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+		    se.src = '//commondatastorage.googleapis.com/code.snapengage.com/js/e3cf3208-b00e-429d-8d3a-3899df7719f1.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+		  })();
+		</script>
+		<!-- end SnapEngage code -->      
+    </body>
+</html>
